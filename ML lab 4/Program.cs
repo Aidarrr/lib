@@ -26,11 +26,10 @@ namespace ML_lab_4
             temp = Console.ReadLine();
             input.AppendLine(temp);
             input.Insert(0, 'y');
-            input.Append('y');
             var TM = fillArray(3, 5);
             int q = 1, i = 1, line;
             char letter;
-
+            Console.Clear();
             while(q != 0)
             {
                 letter = input[i];
@@ -39,16 +38,23 @@ namespace ML_lab_4
                 else if (letter == 'b')
                     line = 1;
                 else
+                {
+                    letter = 'y';
                     line = 2;
+                }
 
                 for (int j = 0; j < input.Length; j++)
                 {
-                    if(input[j] != 'y')
+                    if (j == i)
+                        Console.ForegroundColor = ConsoleColor.Red;
+                    else
+                        Console.ForegroundColor = ConsoleColor.Black;
                     Console.Write(input[j]);
                 }
-                Console.WriteLine();
+                Console.WriteLine("q{0}", q);
                 temp = TM[line, q - 1];
-                Console.WriteLine(temp);
+                Console.WriteLine("({0}, {1}) -> {2}", letter, q, temp);
+                Console.WriteLine();
                 if (temp != "-")
                 {
                     input[i] = temp[0];
@@ -61,6 +67,13 @@ namespace ML_lab_4
                 }
             }
 
+            Console.Write("Результат: ");
+            for (int j = 0; j < input.Length; j++)
+            {
+                if (input[j] != 'y')
+                Console.Write(input[j]);
+            }
+            
         }
     }
 }
