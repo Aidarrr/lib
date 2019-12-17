@@ -56,10 +56,10 @@ double slope(double x, double eps, bool num)
 	return x;
 }
 
-double hord(double x, double a, double eps, bool num)
+double hord(double x, double opposite, double eps, bool num)
 {
 	int i = 0;
-	double x_last = a, x0 = x;
+	double x_last = opposite, x0 = x;
 	x = x_last - func(x_last, num) / (func(x0, num) - func(x_last, num)) * (x0 - x_last);
 
 	while (abs(x - x_last) > eps)
@@ -76,13 +76,52 @@ int main()
 {
 	setlocale(LC_ALL, "Russian");
 	double a1 = 0.5, b1 = 1, a2 = -1, b2 = 0;
+	double x00, x01, opposite0, opposite1;
 
-	cout << half(a1, b1, 0.000001, 0) << endl;
-	cout << half(a2, b2, 0.000001, 1) << endl;
-	cout << slope(1, 0.000001, 0) << endl;
-	cout << slope(-1, 0.000001, 1) << endl;
-	cout << hord(1, a1, 0.000001, 0) << endl;
-	cout << hord(-1, b2, 0.000001, 1) << endl;
+	if (func(a1, 0) * deriv(a1, 0) > 0)
+	{
+		x00 = a1;
+		opposite0 = b1;
+	}
+	else
+	{
+		x00 = b1;
+		opposite0 = a1;
+	}
+	if (func(a2, 1) * deriv(a2, 1) > 0)
+	{
+		x01 = a2;
+		opposite1 = b2;
+	}
+	else
+	{
+		x01 = b2;
+		opposite1 = a2;
+	}
+
+	cout << "eps = 0.001\n";
+	cout << "Уравнение 1 \n" << half(a1, b1, 0.001, 0) << endl << endl;
+	cout << "Уравнение 2 \n" << half(a2, b2, 0.001, 1) << endl << endl;
+	cout << "Уравнение 1 \n" << slope(x00, 0.001, 0) << endl << endl;
+	cout << "Уравнение 2 \n" << slope(x01, 0.001, 1) << endl << endl;
+	cout << "Уравнение 1 \n" << hord(x00, opposite0, 0.001, 0) << endl << endl;
+	cout << "Уравнение 2 \n" << hord(x01, opposite1, 0.001, 1) << endl << endl << endl;
+
+	cout << "eps = 0.000001\n";
+	cout << fixed << setprecision(8) << "Уравнение 1 \n" << half(a1, b1, 0.000001, 0) << endl << endl;
+	cout << "Уравнение 2 \n" << half(a2, b2, 0.000001, 1) << endl << endl;
+	cout << "Уравнение 1 \n" << slope(x00, 0.000001, 0) << endl << endl;
+	cout << "Уравнение 2 \n" << slope(x01, 0.000001, 1) << endl << endl;
+	cout << "Уравнение 1 \n" << hord(x00, opposite0, 0.000001, 0) << endl << endl;
+	cout << "Уравнение 2 \n" << hord(x01, opposite1, 0.000001, 1) << endl << endl << endl;
+
+	cout << "eps = 0.000000001\n";
+	cout << fixed << setprecision(11) << "Уравнение 1\n" << half(a1, b1, 0.000000001, 0) << endl << endl;
+	cout << "Уравнение 2 \n" << half(a2, b2, 0.000000001, 1) << endl << endl;
+	cout << "Уравнение 1 \n" << slope(x00, 0.000000001, 0) << endl << endl;
+	cout << "Уравнение 2 \n" << slope(x01, 0.000000001, 1) << endl << endl;
+	cout << "Уравнение 1 \n" << hord(x00, opposite0, 0.000000001, 0) << endl << endl;
+	cout << "Уравнение 2 \n" << hord(x01, opposite1, 0.000000001, 1) << endl << endl;
 
 
 	return 0;
