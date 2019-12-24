@@ -1,0 +1,6 @@
+E:\Programming\vslibrary\COmp lab2\Newton\bin\Debug\Newton.exe.config
+E:\Programming\vslibrary\COmp lab2\Newton\bin\Debug\Newton.exe
+E:\Programming\vslibrary\COmp lab2\Newton\bin\Debug\Newton.pdb
+E:\Programming\vslibrary\COmp lab2\Newton\obj\Debug\Newton.csprojAssemblyReference.cache
+E:\Programming\vslibrary\COmp lab2\Newton\obj\Debug\Newton.exe
+E:\Programming\vslibrary\COmp lab2\Newton\obj\Debug\Newton.pdb

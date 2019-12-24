@@ -28,7 +28,6 @@ double half(double a, double b, double eps, bool num)
 
 	while (abs(x - left) > eps || abs(x - right) > eps)
 	{
-		
 		if (func(x, num) * func(right, num) < 0)
 			left = x;
 		else
@@ -43,15 +42,15 @@ double half(double a, double b, double eps, bool num)
 double slope(double x, double eps, bool num)
 {
 	int i = 0;
-	double x_last = x;
-	x = x_last - func(x_last, num)/deriv(x_last, num);
+	double x_last;
 
-	while (abs(x - x_last) > eps)
+	do
 	{
 		x_last = x;
 		x = x_last - func(x_last, num) / deriv(x_last, num);
 		i++;
-	}
+	} while (abs(x - x_last) > eps);
+	
 	cout << "Кол-во итераций = " << i << endl;
 	return x;
 }
@@ -60,7 +59,7 @@ double hord(double x, double opposite, double eps, bool num)
 {
 	int i = 0;
 	double x_last = opposite, x0 = x;
-	x = x_last - func(x_last, num) / (func(x0, num) - func(x_last, num)) * (x0 - x_last);
+	x = x_last - func(x_last, num) / (func(x0, num) - func(x_last, num)) * (x0 - x_last); i++;
 
 	while (abs(x - x_last) > eps)
 	{

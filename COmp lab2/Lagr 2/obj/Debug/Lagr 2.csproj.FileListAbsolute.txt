@@ -1,0 +1,6 @@
+E:\Programming\vslibrary\COmp lab2\Lagr 2\obj\Debug\Lagr 2.csprojAssemblyReference.cache
+E:\Programming\vslibrary\COmp lab2\Lagr 2\bin\Debug\Lagr 2.exe.config
+E:\Programming\vslibrary\COmp lab2\Lagr 2\bin\Debug\Lagr 2.exe
+E:\Programming\vslibrary\COmp lab2\Lagr 2\bin\Debug\Lagr 2.pdb
+E:\Programming\vslibrary\COmp lab2\Lagr 2\obj\Debug\Lagr 2.exe
+E:\Programming\vslibrary\COmp lab2\Lagr 2\obj\Debug\Lagr 2.pdb
