@@ -1,0 +1,6 @@
+E:\Programming\vslibrary\COmp lab2\bin\Debug\COmp lab2.exe.config
+E:\Programming\vslibrary\COmp lab2\bin\Debug\COmp lab2.exe
+E:\Programming\vslibrary\COmp lab2\bin\Debug\COmp lab2.pdb
+E:\Programming\vslibrary\COmp lab2\obj\Debug\COmp lab2.csprojAssemblyReference.cache
+E:\Programming\vslibrary\COmp lab2\obj\Debug\COmp lab2.exe
+E:\Programming\vslibrary\COmp lab2\obj\Debug\COmp lab2.pdb
