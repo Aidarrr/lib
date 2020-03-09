@@ -1,92 +1,84 @@
 #include <iostream>
 using namespace std;
 
-//Нужно ли деструкторы писать?
-
 class Person
 {
 private:
-	char *first_name = new char[20];
-	char *last_name = new char[20];
-	char *middle_name = new char[20];
+	string first_name;
+	string last_name;
+	string middle_name;
 	int age;
 public:
 	Person()
 	{
-
+		first_name = "Павел";
+		last_name = "Костицын";
+		middle_name = "Сергеевич";
+		age = 19;
 	}
 
-	Person(char *first, char *last, char* middle, int age)
+	Person(string first, string last, string middle, int age)
 	{
 		first_name = first;
 		last_name = last;
 		middle_name = middle;
-		/*if(correctAge(age))
-			this->age = age;
-		else
-		{
-			
-		}*/
 		this->age = age;
 	}
-
-	//Person(char* first, char* last, char* middle, int age) : first_name(first), last_name (last), middle_name(middle), age(age) {}
-
-	//Должен ли сам метод устанавливать возраст или оставить как проверку в конструкторе?
-	/*bool correctAge(int age)
-	{
-		if (age >= 0 && age <= 200)
-			return true;
-		return false;
-	}*/
 
 	void setAge(int age)
 	{
 		if (age >= 0 && age <= 200)
 			this->age = age;
-		else
-			cout << "Возраст введен неверно\n";
 	}
 
-	void setName(char *first)
+	void setName(string first)
 	{
-		if (strlen(first) >= 0 && strlen(first) <= 20)
+		if (first.size() > 0 && first.size() <= 20)
 			first_name = first;
-		else
-			cout << "Неверная длина строки\n";
 	}
-	void setLast(char* last)
+	void setLastName(string last)
 	{
-		if (strlen(last) >= 0 && strlen(last) <= 20)
+		if (last.size() > 0 && last.size() <= 20)
 			last_name = last;
-		else
-			cout << "Неверная длина строки\n";
 	}
-	void setMiddle(char* middle)
+	void setMiddleName(string middle)
 	{
-		if (strlen(middle) >= 0 && strlen(middle) <= 20)
+		if (middle.size() > 0 && middle.size() <= 20)
 			middle_name = middle;
-		else
-			cout << "Неверная длина строки\n";
+	}
+
+	int getAge()
+	{
+		return age;
+	}
+
+	string getName()
+	{
+		return first_name;
+	}
+
+	string getLastName()
+	{
+		return last_name;
+	}
+
+	string getMiddleName()
+	{
+		return middle_name;
 	}
 
 	void print()
 	{
-		cout << "ФИО: ";
-		for (size_t i = 0; i < strlen(last_name); i++)
-			cout << last_name[i];
-		for (size_t i = 0; i < strlen(first_name); i++)
-			cout << first_name[i];
-		for (size_t i = 0; i < strlen(middle_name); i++)
-			cout << middle_name[i];
-		cout << endl;
-		cout << "Возраст: " << age << endl;
+		cout << "Фамилия: " << getLastName() << endl;
+		cout << "Имя: " << getName() << endl;
+		cout << "Отчество: " << getMiddleName() << endl;
+		cout << "Возраст: " << getAge() << endl;
 	}
 };
 
 enum PhoneBrand
 {
-	Samsung, Alcatel, Huawei, Honor, Nokia, Meizu
+	Samsung, Alcatel, Huawei, Honor
 };
 
 class Phone
@@ -94,30 +86,68 @@ class Phone
 private:
 	Person owner;
 	PhoneBrand brand;
-	char* phonenum = new char[12];
+	string phonenum;
 public:
-	Phone(){}
+	Phone()
+	{
+		brand = Alcatel;
+		phonenum = "+78005553535";
+	}
 
-	Phone(PhoneBrand brand, char* phonenum)
+	Phone(PhoneBrand brand, string phonenum)
 	{
 		this->brand = brand;
 		this->phonenum = phonenum;
 	}
 
-	//TODO: method set owner
+	void setOwner(Person newOwner)
+	{
+		if (owner.getAge() > newOwner.getAge())
+		{
+			cout << "Несоответствующий возраст" << endl;
+			return;
+		}
+		owner = newOwner;
+	}
 
 	void print()
 	{
-		cout << "Марка телефона - " << brand << endl;
-		cout << "Номер телефона - ";
-		for (int i = 0; i < 12; i++)
-			cout << phonenum[i];
+		cout << "Марка телефона - ";
+		switch (brand)
+		{
+		case(0):
+			cout << "Samsung";
+			break;
+		case(1):
+			cout << "Alcatel";
+			break;
+		case(2):
+			cout << "Huawei";
+			break;
+		case(3):
+			cout << "Honor";
+			break;
+		}
 		cout << endl;
-		//todo: cout owner's l,f,m names
+		cout << "Номер телефона: " << phonenum << endl;
+		cout << "Информация о владельце телефона:" << endl;
+		owner.print();
 	}
 };
 
 int main()
 {
+	setlocale(LC_CTYPE, "Rus");
+	Person p1("Александра", "Ложкина", "Сергеевна", 25);
+	Person p2("Евгений", "Наговицын", "Васильевич", 21);
+
+	p1.print();
+	cout << endl;
+	p2.print();
+	cout << endl;
+
+	Phone phone(Honor, "+79125348790");
+	phone.setOwner(p2);
+	phone.print();
 	return 0;
 }
