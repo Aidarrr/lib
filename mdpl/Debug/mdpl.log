@@ -1,0 +1,3 @@
+﻿  Source1.cpp
+D:\Programming\lib\mdpl\Source1.cpp(35,8): warning C4267: 'argument': conversion from 'size_t' to 'char', possible loss of data
+  mdpl.vcxproj -> D:\Programming\lib\mdpl\Debug\mdpl.exe
