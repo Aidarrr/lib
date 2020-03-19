@@ -21,7 +21,7 @@ private:
 public:
 	Tank()
 	{
-		weight = 1000;
+		weight = rand() % 3000 + 1000;
 		name = "Цистерна";
 		load = "Нефть";
 	}
@@ -55,7 +55,7 @@ private:
 public:
 	CarTransport()
 	{
-		weight = 1700;
+		weight = rand() % 2500 + 1500;
 		name = "Автомобили";
 		amount = 50;
 		vehicleType = "Легковые автомобили";
@@ -91,7 +91,7 @@ private:
 public:
 	ForestTransport()
 	{
-		weight = 2300;
+		weight = rand() % 3000 + 2300;
 		name = "Лес";
 		capacity = 71000;
 	}
@@ -124,7 +124,7 @@ private:
 public:
 	Passenger()
 	{
-		weight = 800;
+		weight = rand() % 1201 + 800;
 		name = "Пассажиры";
 		amount = 20;
 	}
@@ -157,7 +157,7 @@ private:
 public:
 	Restaurant()
 	{
-		weight = 800;
+		weight = rand() % 1001 + 800;
 		name = "Ресторан";
 		sqr = 20;
 	}
@@ -185,56 +185,56 @@ public:
 int main()
 {
 	setlocale(LC_ALL, "Russian");
-	vector<Carriage*> train;
 	int n, k, sum = 0;
 	
 	srand(time(0));
 	n = rand() % 20 + 2;
-
+	cout << "n = " << n << endl;
+	cout << "Состав: .";
 	for (int i = 0; i < n; i++)
 	{
-		k = rand() % 4;
+		k = rand() % 5;
 		switch (k)
 		{
 		case 0:
 		{
 			Tank tank;
-			train.push_back(&tank);
+			sum += tank.GetWeight();
+			cout << "[" << tank.GetName() << "].";
 			break;
 		}
 		case 1:
 		{
 			CarTransport car;
-			train.push_back(&car);
+			sum += car.GetWeight();
+			cout << "[" << car.GetName() << "].";
 			break;
 		}
 		case 2:
 		{
 			ForestTransport forest;
-			train.push_back(&forest);
+			sum += forest.GetWeight();
+			cout << "[" << forest.GetName() << "].";
 			break;
 		}
 		case 3:
 		{
 			Passenger passenger;
-			train.push_back(&passenger);
+			sum += passenger.GetWeight();
+			cout << "[" << passenger.GetName() << "].";
 			break;
 		}
 		case 4:
 		{
 			Restaurant rest;
-			train.push_back(&rest);
+			sum += rest.GetWeight();
+			cout << "[" << rest.GetName() << "].";
 			break;
 		}
 		}
 	}
 
-	for (int i = 0; i < n; i++)
-	{
-		sum += train[i]->GetWeight();
-		cout << train[i]->GetName() << endl;
-	}
-	cout << "Вес: " << sum << " кг.\n";
+	cout << "\nВес: " << sum << " кг.\n";
 
 	return 0;
 }
