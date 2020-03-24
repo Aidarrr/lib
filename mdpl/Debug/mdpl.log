@@ -1,3 +1,6 @@
 ﻿  lab.cpp
-D:\Programming\lib\mdpl\lab.cpp(69,20): warning C4018: '<': signed/unsigned mismatch
+D:\Programming\lib\mdpl\lab.cpp(50,11): warning C4267: '=': conversion from 'size_t' to 'char', possible loss of data
+D:\Programming\lib\mdpl\lab.cpp(52,10): warning C4267: '=': conversion from 'size_t' to 'char', possible loss of data
+D:\Programming\lib\mdpl\lab.cpp(84,20): warning C4018: '<': signed/unsigned mismatch
+D:\Programming\lib\mdpl\lab.cpp(91,27): warning C4018: '<': signed/unsigned mismatch
   mdpl.vcxproj -> D:\Programming\lib\mdpl\Debug\mdpl.exe
