@@ -1,0 +1,12 @@
+add ax, cx
+xor cl, dl
+and cx, [bx]
+add al, [bp]
+and [bx], cx
+add [bp], al
+and ax, [bx + 8]
+and ax, [bx + 512]
+xor [bx + 8], ch
+xor [bx + 0fffh], bh
+xor [bp + 8], ch
+xor [bp + 0fffh], bh

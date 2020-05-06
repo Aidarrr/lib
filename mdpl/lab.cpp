@@ -3,17 +3,50 @@
 //#include <vector>
 //#include <algorithm>
 //#include <bitset>
+//#include <fstream>
+//#define memt_size 5
+//#define opcode_size 3
 //using namespace std;
 //
 //char regt[16][3] = { "al", "cl", "dl", "bl", "ah", "ch", "dh", "bh", "ax", "cx", "dx", "bx", "sp", "bp", "si", "di" };
 //
-//struct Mem_t
+//bool reg[2], mem[2], bx[2], bp[2], disp, disp_l, disp_h, w, d;
+//int regs[2];
+//int disp_int;
+//
+//void clear()
+//{
+//	for (size_t i = 0; i <2; i++)
+//	{
+//		reg[i] = false; mem[i] = false; bx[i] = false; bp[i] = false;
+//	}
+//	disp = false;
+//	disp_l = false;
+//	disp_h = false;
+//	w = false;
+//	d = false;
+//}
+//
+//struct Opcode_t
 //{
 //	string name;
-//	char mod;
-//	char rm;
+//	string code;
 //};
 //
+//struct Mem_t
+//{
+//	bool bx;
+//	bool bp;
+//	bool disp_l;
+//	bool disp_h;
+//	string mod;
+//	string rm;
+//};
+//
+//Mem_t memt[memt_size] = { {false, true, true, false, "01", "110"}, {true, false, false, false, "00", "111"},
+//				{true, false, true, false, "01", "111"}, {false, true, true, true, "10", "110"}, {true, false, true, true, "10", "111"} };
+//
+//Opcode_t opcode[opcode_size] = { {"and", "001000"}, {"add", "000000"}, {"xor", "001100"} };
 //
 //struct Operation
 //{
@@ -42,163 +75,196 @@
 //	return t;
 //}
 //
-//void reg_reg(Operation *op, vector<string> *opname)
+//void reg_reg(Operation *op)
 //{
-//	op->d = 1;
-//
-//	for (size_t i = 0; i < 16; i++)
-//	{
-//		if (regt[i] == (*opname)[0])
-//		{
-//			op->w = i >> 3;
-//			op->reg = i2b(i, 3);
-//		}
-//		if (regt[i] == (*opname)[1])
-//			op->rm = i2b(i, 3);
-//	}
-//	op->mod = "11";	
+//	op->reg = i2b(regs[0], 3);
+//	op->rm = i2b(regs[1], 3);
+//	op->mod = "11";
 //}
 //
-//void reg_mem(Operation* op, Mem_t *mem, vector<string> *opname, bool *operand)
+//void reg_mem(Operation* op)
 //{
-//	int memind, regind;
-//	if (!operand[0])
+//	int m, r;
+//	if (d)
 //	{
-//		memind = 0;
-//		regind = 1;
-//		op->d = 0;
+//		m = 1;
+//		r = 0;
 //	}
 //	else
 //	{
-//		memind = 1;
-//		regind = 0;
-//		op->d = 1;
+//		m = 0;
+//		r = 1;
 //	}
 //
-//	for (int i = 0; i < 6; i++)
+//	for (int i = 0; i < memt_size; i++)
 //	{
-//		if (mem[i].name == (*opname)[memind])
+//		if (memt[i].bp == bp[m] && memt[i].bx == bx[m] && memt[i].disp_l == disp_l && memt[i].disp_h == disp_h)
 //		{
-//			op->rm = i2b(mem[i].rm, 3);
-//			op->mod = i2b(mem[i].mod, 2);
-//			break;
+//			op->mod = memt[i].mod;
+//			op->rm = memt[i].rm;
 //		}
 //	}
 //
-//	for (int i = 0; i < 16; i++)
-//	{
-//		if (regt[i] == (*opname)[regind])
-//		{
-//			op->reg = i2b(i, 3);
-//			op->w = i >> 3;
-//			break;
-//		}
-//	}
+//	op->reg = i2b(regs[r], 3);
 //}
 //
-//void reg_memDisp(Operation* op, Mem_t* mem, vector<string>* opname, bool* operand)
-//{
-//	string disp, name;
-//	int memind, regind, start, end, dispint;
-//	if (!operand[0])
-//	{
-//		memind = 0;
-//		regind = 1;
-//		op->d = 0;
-//	}
-//	else
-//	{
-//		memind = 1;
-//		regind = 0;
-//		op->d = 1;
-//	}
 //
-//	for (int i = 0; i < (*opname)[memind].size(); i++)
-//		if ((*opname)[memind][i] != ' ' && (*opname)[memind][i] != '[')
-//		{
-//			start = i;
-//			break;
-//		}
-//	name = (*opname)[memind].substr(start, 2);
-//	
-//	for (int i = 0; i < (*opname)[memind].size(); i++)
+//void get_disp(string* opname)
+//{
+//	int start, end;
+//	string disp_s;
+//	for (int i = 0; i < (*opname).size(); i++)
 //	{
-//		if ((*opname)[memind][i] == '+')
+//		if ((*opname)[i] == '+')
 //		{
 //			i++;
-//			while ((*opname)[memind][i] == ' ')
+//			while ((*opname)[i] == ' ')
 //				i++;
 //			start = i;
-//			while ((*opname)[memind][i] != ' ' && (*opname)[memind][i] != ']')
+//			while ((*opname)[i] != ' ' && (*opname)[i] != ']')
 //				i++;
 //			end = i;
 //			break;
 //		}
 //	}
 //	
-//	disp = (*opname)[memind].substr(start, end - start);
+//	disp_s = (*opname).substr(start, end - start);
 //
-//	if (disp[disp.size() - 1] == 'h')
+//	if (disp_s[disp_s.size() - 1] == 'h')
 //	{
-//		dispint = stoi(disp, nullptr, 16);
+//		disp_int = stoi(disp_s, nullptr, 16);
 //	}
-//	else if (disp[disp.size() - 1] == 'o')
+//	else if (disp_s[disp_s.size() - 1] == 'o')
 //	{
-//		dispint = stoi(disp, nullptr, 8);
+//		disp_int = stoi(disp_s, nullptr, 8);
 //	}
 //	else
-//		dispint = stoi(disp, nullptr);
+//		disp_int = stoi(disp_s, nullptr);
+//}
 //
-//	
-//	
-//	if (dispint < 127)
+//void set_disp(Operation *op)
+//{
+//	string disp_s;
+//	if (disp_h && disp_l)
 //	{
-//		name = "[" + name + " + disp_l]";
-//		op->disp_l = bitset<8>(dispint).to_string();
+//		disp_s = bitset<16>(disp_int).to_string();
+//		op->disp_l = disp_s.substr(8, 8);
+//		op->disp_h = disp_s.substr(0, 8);
+//	}
+//	else if (disp_l)
+//	{
+//		op->disp_l = bitset<8>(disp_int).to_string();
+//	}
+//}
+//
+//void operand(int n, string* opname)
+//{
+//	n--;
+//	if ((*opname).find('[') != -1)
+//	{
+//		mem[n] = 1;
+//		if ((*opname).find("bp") != -1)
+//			bp[n] = 1;
+//		else if ((*opname).find("bx") != -1)
+//			bx[n] = 1;
+//
+//		if ((*opname).find("+") != -1)
+//		{
+//			disp = 1;
+//			get_disp(opname);
+//			if (disp_int < 127)
+//				disp_l = 1;
+//			else
+//			{
+//				disp_l = 1; disp_h = 1;
+//			}
+//		}
+//		else if (bp[n] == 1)
+//		{
+//			disp = 1; disp_l = 1;
+//			disp_int = 0;
+//		}
 //	}
 //	else
 //	{
-//		name = "[" + name + " + disp_h:disp_l]";
-//		disp = bitset<16>(dispint).to_string();
-//		op->disp_l = disp.substr(8, 8);
-//		op->disp_h = disp.substr(0, 8);
+//		reg[n] = 1;
+//		for (size_t i = 0; i < 16; i++)
+//			if (*opname == regt[i])
+//				regs[n] = i;
+//		w = (regs[n] >> 3);
 //	}
 //
-//	for (int i = 0; i < 6; i++)
+//	if (n >= 1)
 //	{
-//		if (mem[i].name == name)
-//		{
-//			op->rm = i2b(mem[i].rm, 3);
-//			op->mod = i2b(mem[i].mod, 2);
-//			break;
-//		}
+//		if (reg[0] && reg[1] || reg[0] && mem[1])
+//			d = true;
+//		else
+//			d = false;
 //	}
+//}
 //
-//	for (int i = 0; i < 16; i++)
-//	{
-//		if (regt[i] == (*opname)[regind])
-//		{
-//			op->reg = i2b(i, 3);
-//			op->w = i >> 3;
-//			break;
+//void syn(Operation *op)
+//{
+//	op->d = d;
+//	op->w = w;
+//	if (reg[0] && reg[1])
+//		reg_reg(op);
+//	else if (reg[0] && mem[1] || reg[1] && mem[0])
+//		reg_mem(op);
+//	if (disp)
+//		set_disp(op);
+//}
+//
+//char* bin_to_hex(const char* b, char* h) {
+//	int m, n, i, j;
+//	const char* p = b;
+//	char ch, * q, * t = h;
+//
+//	/*while (*b && (*b == '0'))
+//		++b;*/
+//
+//	p = b;
+//	while (*p)
+//		++p;
+//
+//	if (p == b)
+//		*h++ = '0';
+//
+//	n = (int)(p - b);
+//	for (i = n - 1; i > -1; i -= 4) {
+//		n = i - 3;
+//		if (n <= -1)
+//			n = 0;
+//
+//		for (m = 0, j = n; j <= i; ++j)
+//			m |= (int)(b[j] - '0') << (i - j);
+//
+//		*h++ = (m < 10) ? (char)(m + '0') : (char)(m - 10 + 'A');
+//	}
+//	*h = '\0';
+//
+//	if (h > t) {
+//		for (--h, q = t; h > q; --h, ++q) {
+//			ch = *q;
+//			*q = *h;
+//			*h = ch;
 //		}
 //	}
+//	return t;
 //}
 //
 //int main()
 //{
-//	Mem_t memt[6] = { {"[bp]", 0, 6}, {"[bx]", 0, 7}, {"[bp + disp_l]", 1, 6}, {"[bx + disp_l]", 1, 7}, {"[bp + disp_h:disp_l]", 2, 6}, {"[bx + disp_h:disp_l]", 2, 7} };
-//	
-//	while (true)
+//	ifstream read("com.txt");
+//	string command;
+//
+//	while (getline(read, command))
 //	{
 //		string name; int endname;
-//		string command;
-//		getline(cin, command);
+//		
 //		Operation op;
-//
-//		bool operand[2]; // 1 - reg, 0 - mem
 //		vector<string> opname;
-//
+//		
 //
 //		for (int i = 0; i < command.size(); i++)
 //		{
@@ -209,14 +275,13 @@
 //				break;
 //			}
 //		}
-//
+//		
 //		for (int i = endname, j = 0; i < command.size(); i++)
 //		{
 //			if (command[i] != ' ' && opname.size() == 0)
 //			{
 //				if (command[i] == '[')
 //				{
-//					operand[j++] = false;
 //					int endName = i;
 //					while (command[endName] != ',')
 //						endName++;
@@ -226,7 +291,6 @@
 //				}
 //				else
 //				{
-//					operand[j++] = true;
 //					opname.push_back(command.substr(i, 2));
 //				}
 //			}
@@ -235,49 +299,37 @@
 //				i++;
 //				while (command[i] == ' ')
 //					i++;
-//				if (command[i] == '[')
-//				{
-//					operand[j++] = false;
-//					opname.push_back(command.substr(i, command.size() - i));
-//				}
-//				else
-//				{
-//					operand[j++] = true;
-//					opname.push_back(command.substr(i, 2));
-//				}
+//				opname.push_back(command.substr(i, command.size() - i));
 //				break;
 //			}
 //		}
 //
+//		clear();
 //
-//		if (name == "add")
-//			op.opcode = "000000";
-//		else if (name == "and")
-//			op.opcode = "001000";
-//		else
-//			op.opcode = "001100";
-//
-//		if (operand[0] && operand[1])
+//		operand(1, &opname[0]);
+//		if (opname.size() == 2)
 //		{
-//			reg_reg(&op, &opname);
-//		}
-//		else if (!operand[0] && operand[1] || operand[0] && !operand[1])
-//		{
-//			if ((!operand[0] && opname[0].find('+') != -1) || (!operand[1] && opname[1].find('+') != -1))
-//				reg_memDisp(&op, memt, &opname, operand);
-//			else
-//				reg_mem(&op, memt, &opname, operand);
+//			operand(2, &opname[1]);
+//			syn(&op);
 //		}
 //
-//		cout << "opcode" << '\t' << "d" << '\t' << "w" << '\t' << "mod" << '\t' << "reg" << '\t' << "r/m" << "\tdisp_l\t" << "\tdisp_h" << endl;
-//		cout << op.opcode << '\t' << op.d << '\t' << op.w << '\t' << op.mod << '\t' << op.reg << '\t' << op.rm;
+//		for (int i = 0; i < opcode_size; i++)
+//		{
+//			if (name == opcode[i].name)
+//				op.opcode = opcode[i].code;
+//		}
 //
-//		if (op.mod == "01")
-//			cout << '\t' << op.disp_l << endl;
-//		else if (op.mod == "10")
-//			cout << '\t' << op.disp_l << '\t' << op.disp_h << endl;
-//		cout << endl << endl;
+//		cout << command << endl;
+//		command = op.opcode + to_string(op.d) + to_string(op.w) + op.mod + op.reg + op.rm;
+//		if (disp_l && disp_h)
+//			 command += op.disp_l + op.disp_h;
+//		else if (disp_l)
+//			command += op.disp_l;
+//
+//		char s[32];
+//		cout << bin_to_hex(command.c_str(), s) << endl << endl;
 //	}
 //
+//	read.close();
 //	return 0;
 //}

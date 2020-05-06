@@ -1,0 +1,5 @@
+add ax, cx
+xor cl, dl
+and cx, [bx]
+and [bx], cx
+add [bp], al
