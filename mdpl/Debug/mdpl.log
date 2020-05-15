@@ -1,3 +1,4 @@
-﻿  obj2.cpp
-D:\Programming\lib\mdpl\obj2.cpp(87,24): warning C4018: '<': signed/unsigned mismatch
+﻿  lab3.cpp
+D:\Programming\lib\mdpl\lab3.cpp(128,20): warning C4018: '<': signed/unsigned mismatch
+D:\Programming\lib\mdpl\lab3.cpp(342,35): warning C4018: '<': signed/unsigned mismatch
   mdpl.vcxproj -> D:\Programming\lib\mdpl\Debug\mdpl.exe

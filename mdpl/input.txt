@@ -1,0 +1,14 @@
+lea cx, name1
+lea dx, name2
+add cx, dx
+add dx, [bx]
+add dx, [bp]
+add cx, [bx + 8]
+add cx, [bx + 512]
+add dx, [bp + 8]
+add dx, [bp + 1008]
+ret
+name1 dw 5
+name2 dw 8
+name3 dw 3
+end
