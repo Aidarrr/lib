@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <bitset>
 #include <fstream>
+#include <sstream>
 #define memt_size 5
 #define mnema_size 1
 #define lea_size 1
@@ -65,7 +66,7 @@ struct Opcode_t
 
 Opcode_t mnema_opcode[mnema_size] = {{"add", "000000"}};
 Opcode_t lea_opcode[lea_size] = { {"lea", "1011"} };
-Opcode_t no_opcode[no_op_size] = { {"ret", "?"}, {"end", "?"} };
+Opcode_t no_opcode[no_op_size] = { {"ret", "11000011"}, {"end", "1011100000000000010011001100110100100001"} };
 Opcode_t def_opcode[define_size] = { {"dw", "?"} };
 
 string i2b(char x, int n)
@@ -272,7 +273,7 @@ char* bin_to_hex(const char* b, char* h) {
 	return t;
 }
 
-void name_dw(vector <string> *com, string *name)
+void name_dw(vector <string> *com, string *name, string *command)
 {
 	for (size_t i = 0; i < (*com).size(); i++)
 	{
@@ -291,6 +292,18 @@ void name_dw(vector <string> *com, string *name)
 			}
 		}
 	}
+
+	for (int i = (*command).find("dw") + 3; i < (*command).size(); i++)
+	{
+		string t;
+		while ((*command)[i] != ',' && i != (*command).size())
+		{
+			t += (*command)[i];
+			i++;
+		}
+		t = bitset<16>(stoi(t)).to_string();
+		(*com).push_back(t.substr(8, 8) + t.substr(0, 8));
+	}
 }
 
 int main()
@@ -299,20 +312,19 @@ int main()
 	string command;
 	vector <string> hex;
 	vector<string> com;
-	char ch[32];
-
+	char ch[64];
 	while (getline(in_file, command))
 	{
 		Operation op;
 		vector<string> opname;
-		string name; int endname;
+		string name; int endname, indx_noop;
 
 		for (size_t i = 0; i < command.size(); i++)
 		{
 			if (command[i] == ' ' || i == command.size() - 1)
 			{
 				name = command.substr(0, i);
-				if(i == command.size() - 1)
+				if (i == command.size() - 1)
 					name = command.substr(0, i + 1);
 				endname = i + 1;
 				for (size_t i = 0; i < mnema_size; i++)
@@ -332,7 +344,10 @@ int main()
 						def = 1;
 				for (size_t i = 0; i < no_op_size; i++)
 					if (name == no_opcode[i].name)
+					{
+						indx_noop = i;
 						no_op = 1;
+					}
 				break;
 			}
 		}
@@ -360,7 +375,7 @@ int main()
 				}
 			}
 
-			
+
 
 			operand(1, &opname[0]);
 			if (opname.size() == 2)
@@ -394,16 +409,17 @@ int main()
 					addr += 2;
 				com.push_back(command);
 			}
-			
+
 		}
 		else if (def)
 		{
-			name_dw(&com, &name);
+			name_dw(&com, &name, &command);
 			addr += 2;
 		}
 		else if (no_op)
 		{
-			addr++;
+			com.push_back(no_opcode[indx_noop].code);
+			addr += no_opcode[indx_noop].code.size() / 8;
 		}
 		clear();
 	}
@@ -413,5 +429,26 @@ int main()
 	}
 
 	in_file.close();
+
+	std::basic_string<uint8_t> bytes;
+	command.clear();
+	for (size_t i = 0; i < hex.size(); i++)
+	{
+		command += hex[i];
+	}
+
+	for (size_t i = 0; i < command.length(); i += 2) {
+		uint16_t byte;
+		std::string nextbyte = command.substr(i, 2);
+		std::istringstream(nextbyte) >> std::hex >> byte;
+		bytes.push_back(static_cast<uint8_t>(byte));
+	}
+
+	std::string result(begin(bytes), end(bytes));
+
+	std::ofstream output_file("com.com", std::ios::binary | std::ios::out);
+
+	output_file << result;
+	output_file.close();
 	return 0;
 }
