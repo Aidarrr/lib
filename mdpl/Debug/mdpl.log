@@ -1,5 +1,12 @@
-﻿  lab3.cpp
-D:\Programming\lib\mdpl\lab3.cpp(129,20): warning C4018: '<': signed/unsigned mismatch
-D:\Programming\lib\mdpl\lab3.cpp(296,44): warning C4018: '<': signed/unsigned mismatch
-D:\Programming\lib\mdpl\lab3.cpp(357,35): warning C4018: '<': signed/unsigned mismatch
+﻿  ex2.cpp
+  lab.cpp
+  lab3.cpp
+  Lab_Rustam_5.cpp
+  obj1.cpp
+  obj2.cpp
+  Source.cpp
+  Source1.cpp
+  Source2.cpp
+  Generating Code...
+D:\Programming\lib\mdpl\Lab_Rustam_5.cpp(94,54): warning C4244: '+=': conversion from 'double' to 'long', possible loss of data
   mdpl.vcxproj -> D:\Programming\lib\mdpl\Debug\mdpl.exe

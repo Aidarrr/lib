@@ -1,0 +1,24 @@
+sub ax, bx
+sub dh, cl
+sub ax, [bx]
+sub bx, [si]
+sub bx, [di]
+sub dl, [bx + si]
+sub ch, [bx + di]
+sub [bx], bx
+sub [si], bh
+sub [di], cl
+sub [bx + si], ah
+sub [bx + di], dh
+cmp ax, bx
+cmp dh, bh
+cmp ah, [bx]
+cmp bl, [si]
+cmp cx, [di]
+cmp dl, [bx + si]
+cmp ch, [bx + di]
+cmp [bx], bx
+cmp [si], bh
+cmp [di], cl
+cmp [bx + si], ah
+cmp [bx + di], dh
