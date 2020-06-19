@@ -1,0 +1,15 @@
+﻿  Source.cpp
+D:\Programming\lib\Balls\Source.cpp(58,73): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Programming\lib\Balls\Source.cpp(58,43): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Programming\lib\Balls\Source.cpp(58,19): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Programming\lib\Balls\Source.cpp(80,69): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Programming\lib\Balls\Source.cpp(80,56): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\Programming\lib\Balls\Source.cpp(92,25): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\Programming\lib\Balls\Source.cpp(93,25): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\Programming\lib\Balls\Source.cpp(213,61): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\Programming\lib\Balls\Source.cpp(213,47): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\Programming\lib\Balls\Source.cpp(213,33): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\Programming\lib\Balls\Source.cpp(213,20): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\Programming\lib\Balls\Source.cpp(219,45): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\Programming\lib\Balls\Source.cpp(219,26): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  Balls.vcxproj -> D:\Programming\lib\Balls\Debug\Balls.exe

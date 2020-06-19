@@ -1,0 +1,4 @@
+﻿  Source.cpp
+D:\Programming\lib\string\Source.cpp(16,24): warning C4018: '<': signed/unsigned mismatch
+D:\Programming\lib\string\Source.cpp(37,24): warning C4018: '<': signed/unsigned mismatch
+  string.vcxproj -> D:\Programming\lib\string\Debug\string.exe

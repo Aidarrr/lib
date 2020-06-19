@@ -126,6 +126,7 @@
     <ClCompile Include="ex2.cpp" />
     <ClCompile Include="lab.cpp" />
     <ClCompile Include="lab3.cpp" />
+    <ClCompile Include="Lab_Rustam_5.cpp" />
     <ClCompile Include="obj1.cpp" />
     <ClCompile Include="obj2.cpp" />
     <ClCompile Include="Source.cpp" />
