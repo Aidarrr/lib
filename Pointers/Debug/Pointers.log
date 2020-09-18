@@ -1,0 +1,5 @@
+﻿  Source4.cpp
+D:\Programming\lib\Pointers\Source4.cpp(43,19): warning C4293: '<<': shift count negative or too big, undefined behavior
+D:\Programming\lib\Pointers\Source4.cpp(80,23): warning C4018: '<': signed/unsigned mismatch
+D:\Programming\lib\Pointers\Source4.cpp(92,23): warning C4018: '<': signed/unsigned mismatch
+  Pointers.vcxproj -> D:\Programming\lib\Pointers\Debug\Pointers.exe

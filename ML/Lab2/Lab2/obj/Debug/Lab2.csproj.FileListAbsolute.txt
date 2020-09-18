@@ -1,0 +1,13 @@
+C:\Users\NoScope\Programming\db\ML\Lab2\Lab2\bin\Debug\Lab2.exe.config
+C:\Users\NoScope\Programming\db\ML\Lab2\Lab2\bin\Debug\Lab2.exe
+C:\Users\NoScope\Programming\db\ML\Lab2\Lab2\bin\Debug\Lab2.pdb
+C:\Users\NoScope\Programming\db\ML\Lab2\Lab2\obj\Debug\Lab2.csprojAssemblyReference.cache
+C:\Users\NoScope\Programming\db\ML\Lab2\Lab2\obj\Debug\Lab2.csproj.CoreCompileInputs.cache
+C:\Users\NoScope\Programming\db\ML\Lab2\Lab2\obj\Debug\Lab2.exe
+C:\Users\NoScope\Programming\db\ML\Lab2\Lab2\obj\Debug\Lab2.pdb
+D:\Programming\db\ML\Lab2\Lab2\bin\Debug\Lab2.exe.config
+D:\Programming\db\ML\Lab2\Lab2\bin\Debug\Lab2.exe
+D:\Programming\db\ML\Lab2\Lab2\bin\Debug\Lab2.pdb
+D:\Programming\db\ML\Lab2\Lab2\obj\Debug\Lab2.csprojAssemblyReference.cache
+D:\Programming\db\ML\Lab2\Lab2\obj\Debug\Lab2.exe
+D:\Programming\db\ML\Lab2\Lab2\obj\Debug\Lab2.pdb

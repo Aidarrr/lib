@@ -1,0 +1,16 @@
+push [bx]
+push [bx + si]
+push [bx + di]
+push [bx + 24]
+push [bx + 512]	
+push ax
+push cx
+push ds
+pop [bx]
+pop [bx + si]
+pop [bx + di]
+pop [bx + 248]
+pop [bx + 24]
+pop bx
+pop dx
+pop es

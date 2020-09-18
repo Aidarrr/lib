@@ -1,0 +1,2 @@
+D:\Programming\lib\Pointers\Debug\Pointers.exe
+D:\Programming\lib\Pointers\Debug\Pointers.pdb

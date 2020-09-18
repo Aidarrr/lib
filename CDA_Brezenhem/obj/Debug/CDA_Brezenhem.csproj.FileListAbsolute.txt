@@ -1,0 +1,10 @@
+D:\Programming\lib\CDA_Brezenhem\bin\Debug\CDA_Brezenhem.exe.config
+D:\Programming\lib\CDA_Brezenhem\bin\Debug\CDA_Brezenhem.exe
+D:\Programming\lib\CDA_Brezenhem\bin\Debug\CDA_Brezenhem.pdb
+D:\Programming\lib\CDA_Brezenhem\obj\Debug\CDA_Brezenhem.csprojAssemblyReference.cache
+D:\Programming\lib\CDA_Brezenhem\obj\Debug\CDA_Brezenhem.Form1.resources
+D:\Programming\lib\CDA_Brezenhem\obj\Debug\CDA_Brezenhem.Properties.Resources.resources
+D:\Programming\lib\CDA_Brezenhem\obj\Debug\CDA_Brezenhem.csproj.GenerateResource.cache
+D:\Programming\lib\CDA_Brezenhem\obj\Debug\CDA_Brezenhem.csproj.CoreCompileInputs.cache
+D:\Programming\lib\CDA_Brezenhem\obj\Debug\CDA_Brezenhem.exe
+D:\Programming\lib\CDA_Brezenhem\obj\Debug\CDA_Brezenhem.pdb
