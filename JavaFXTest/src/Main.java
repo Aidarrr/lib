@@ -1,3 +1,4 @@
+/*
 import javafx.application.Application;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -6,7 +7,6 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.Group;
 import javafx.scene.text.Text;
-
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -55,9 +55,10 @@ class Cube
 
 public class Main extends Application
 {
-    static  int w = 16, h = 9;
+    static  double w = 16.0, h = 9.0;
     static  double theta = Math.PI / 2;
-    static double a = (double) ( h / w);
+    static double rotAngle;
+    static double a = ( h / w);
     static  double F = 1 / Math.tan(theta / 2);
     static  double Znear = 0.1;
     static double Zfar = 1000.0;
@@ -68,13 +69,18 @@ public class Main extends Application
         {a * F,0,0,0 }, {0, F, 0, 0}, {0,0,q, 1}, {0, 0, -Znear * q, 0}
     };
 
+    static double[][] matRotZ =
+            {
+                    {Math.cos(rotAngle), -Math.sin(rotAngle), 0, 0}, {Math.sin(rotAngle), Math.cos(rotAngle), 0, 0}, {0, 0, 1, 0}, {0,0,0,0}
+            };
+
     public static void projecting(vec3d vec)
     {
         double[] resArr = {0,0,0,0};
-        double[] v = {vec.x, vec.y, vec.z, 1};
+        double[] v = {vec.x, vec.y, vec.z, 1.0};
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-                resArr[i] += v[i] * projMatrix[j][i];
+                resArr[i] += v[j] * projMatrix[j][i];
             }
         }
 
@@ -90,6 +96,7 @@ public class Main extends Application
         {
             for (vec3d vec : tri.tri)
             {
+                vec.z += 3.0;
                 projecting(vec);
             }
         }
@@ -135,27 +142,27 @@ public class Main extends Application
     @Override
     public void start(Stage stage)
     {
-        Line[] lines = new Line[12];
+        int step = 100;
+        int width = 600, height = 400;
+        Line[] lines = new Line[36];
         int i =0;
         for (triangle tri:cube.cubeCoord)
         {
-            for (int j = 0; j < tri.tri.size(); j++)
-            {
-                var vec = tri.tri.get(j);
-                var vecNext = tri.tri.get(j + 1);
-                lines[i] = new Line(tri.tri.get(j).x, tri.tri.get(j).y, )
-            }
+            var vec1 = tri.tri.get(0);
+            var vec2 = tri.tri.get(1);
+            var vec3 = tri.tri.get(2);
+            lines[i++] = new Line(vec1.x * step + width / 2, height - vec1.y * step - height / 2, vec2.x * step + width / 2, height - vec2.y * step - height / 2);
+            lines[i++] = new Line(vec2.x * step + width / 2, height - vec2.y * step - height / 2, vec3.x * step + width / 2, height - vec3.y * step - height / 2);
+            lines[i++] = new Line(vec3.x * step + width / 2, height - vec3.y * step - height / 2, vec1.x * step + width / 2,height -  vec1.y * step - height / 2);
         }
-
 
         Group group = new Group(lines);
         Scene scene = new Scene(group);
-        scene.setFill(Color.BLACK);
 
         stage.setScene(scene);
         stage.setTitle("3D Cube");
-        stage.setWidth(1024);
-        stage.setHeight(1080);
+        stage.setWidth(width);
+        stage.setHeight(height);
         stage.show();
     }
-}
+}*/
