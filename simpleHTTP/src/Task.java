@@ -1,3 +1,4 @@
+/*
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -7,35 +8,43 @@ class PaginationHelper<I>
     int itemsPerPage;
     List<I> collection;
     List<List<I>> paged;
-    /**
+    */
+/**
      * The constructor takes in an array of items and a integer indicating how many
      * items fit within a single page
-     */
+     *//*
+
     public PaginationHelper(List<I> collection, int itemsPerPage)
     {
         this.collection = collection;
         this.itemsPerPage = itemsPerPage;
-        /*List<I> temp = new ArrayList<I>();
+        */
+/*List<I> temp = new ArrayList<I>();
         temp.add(collection[0]);
         I e = collection[0];
         for (int i = 0; i < collection.size(); i++)
         {
             temp.add(collection[i]);
 
-        }*/
+        }*//*
+
     }
 
-    /**
+    */
+/**
      * returns the number of items within the entire collection
-     */
+     *//*
+
     public int itemCount()
     {
         return collection.size();
     }
 
-    /**
+    */
+/**
      * returns the number of pages
-     */
+     *//*
+
     public int pageCount()
     {
         int page = 0;
@@ -49,10 +58,12 @@ class PaginationHelper<I>
         return page;
     }
 
-    /**
+    */
+/**
      * returns the number of items on the current page. page_index is zero based.
      * this method should return -1 for pageIndex values that are out of range
-     */
+     *//*
+
     public int pageItemCount(int pageIndex)
     {
         if(pageIndex > pageCount() - 1 || pageIndex < 0)
@@ -71,10 +82,12 @@ class PaginationHelper<I>
             return  itemsPerPage;
     }
 
-    /**
+    */
+/**
      * determines what page an item is on. Zero based indexes
      * this method should return -1 for itemIndex values that are out of range
-     */
+     *//*
+
     public int pageIndex(int itemIndex) {
         if(itemIndex < 0 || itemIndex >= collection.size())
             return -1;
@@ -90,3 +103,4 @@ public class Task
     }
 }
 
+*/

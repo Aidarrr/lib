@@ -1,0 +1,10 @@
+D:\Programming\lib\Clipping\bin\Debug\Clipping.exe.config
+D:\Programming\lib\Clipping\bin\Debug\Clipping.exe
+D:\Programming\lib\Clipping\bin\Debug\Clipping.pdb
+D:\Programming\lib\Clipping\obj\Debug\Clipping.csprojAssemblyReference.cache
+D:\Programming\lib\Clipping\obj\Debug\Clipping.Form1.resources
+D:\Programming\lib\Clipping\obj\Debug\Clipping.Properties.Resources.resources
+D:\Programming\lib\Clipping\obj\Debug\Clipping.csproj.GenerateResource.cache
+D:\Programming\lib\Clipping\obj\Debug\Clipping.csproj.CoreCompileInputs.cache
+D:\Programming\lib\Clipping\obj\Debug\Clipping.exe
+D:\Programming\lib\Clipping\obj\Debug\Clipping.pdb
