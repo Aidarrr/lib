@@ -39,24 +39,21 @@ namespace Clipping
         {
             var rand = new Random();
             int moveX, moveY;
-            int randomX_Positive = rand.Next(0, width/step - figure[maxX_i, maxX_j]);
-            int randomX_Negative = -1*(rand.Next(0, figure[minX_i, minX_j]));
+            int randomX_Positive = rand.Next(0, width / step - figure[maxX_i, maxX_j]);
+            int randomX_Negative = -1 * (rand.Next(0, figure[minX_i, minX_j]));
             int randomY_Positive = rand.Next(0, height / step - figure[maxY_i, maxY_j]);
             int randomY_Negative = -1 * (rand.Next(0, figure[minY_i, minY_j]));
 
-            int rndX_Direction = rand.Next(0, 2);
-            int rndY_Direction = rand.Next(0, 2);
-
-            if (rndX_Direction == 0)
+            if (randomX_Positive > Math.Abs(randomX_Negative))
                 moveX = randomX_Positive;
             else
                 moveX = randomX_Negative;
 
-            if(rndY_Direction == 0)
+            if (randomY_Positive > Math.Abs(randomY_Negative))
                 moveY = randomY_Positive;
             else
                 moveY = randomY_Negative;
-            
+
             for (int i = 0; i < figure.GetLength(0); i++)
             {
                 figure[i, 0] += moveX;
@@ -71,12 +68,9 @@ namespace Clipping
             Graphics graphics = Graphics.FromImage(bitmap);
 
             for (int i = 0; i < figure.GetLength(0); i++)
-            {
                 Clip(figure[i, 0], figure[i, 1], figure[i, 2], figure[i, 3], pixelsFigure);
-            }
 
             Figure_Brezenham(pixelsRect, rectangle);
-            //Figure_Brezenham(pixelsFigure, figure);
 
             DrawGrid(width, height, pixelsFigure, pixelsRect, graphics);
             pictureBox1.Image = bitmap;
@@ -110,9 +104,8 @@ namespace Clipping
             if (dy != 0)
                 dxdy = dx / dy;
 
-            for (int j = 0; j < 25; j++)
+            for (int j = 0; j < 5; j++)
             {
-
                 if (codeBegin == 0 && codeEnd == 0)
                 {
                     Brezenham((int)x0, (int)y0, (int)x1, (int)y1, pixelsFigure);
@@ -125,58 +118,47 @@ namespace Clipping
                         return false;
                 }
 
-                if ((j + 1) % 2 == 0)
+                if (codeBegin != 0)
                 {
-                    if ((codeBegin & 1) == 1)
-                    {
-                        y0 += dydx * (rectangle[minRecX_i, minRecX_j] - x0);    //(delta y / delta x) * delta x
-                        x0 = rectangle[minRecX_i, minRecX_j];
-                    }
-                    else if ((codeBegin & 2) == 2)
-                    {
-                        y0 += dydx * (x0 - rectangle[maxRecX_i, maxRecX_j]);
-                        x0 = rectangle[maxRecX_i, maxRecX_j];
-                    }
-                    else if ((codeBegin & 4) == 4)
-                    {
-                        x0 += dxdy * (rectangle[minRecY_i, minRecY_j] - y0);
-                        y0 = rectangle[minRecY_i, minRecY_j];
-                    }
-                    else if ((codeBegin & 8) == 8)
-                    {
-                        x0 += dxdy * (y0 - rectangle[maxRecY_i, maxRecY_j]);
-                        y0 = rectangle[maxRecY_i, maxRecY_j];
-                    }
-
+                    double[] tempPoints = MovePoint(codeBegin, y0, x0, dxdy, dydx);
+                    x0 = tempPoints[0]; y0 = tempPoints[1];
                     codeBegin = DefineCode(x0, y0);
                 }
-                else
+                else if(codeEnd != 0)
                 {
-                    if ((codeEnd & 1) == 1)
-                    {
-                        y1 += dydx * (rectangle[minRecX_i, minRecX_j] - x1);    //(delta y / delta x) * delta x
-                        x1 = rectangle[minRecX_i, minRecX_j];
-                    }
-                    else if ((codeEnd & 2) == 2)
-                    {
-                        y1 += dydx * (x1 - rectangle[maxRecX_i, maxRecX_j]);
-                        x1 = rectangle[maxRecX_i, maxRecX_j];
-                    }
-                    else if ((codeEnd & 4) == 4)
-                    {
-                        x1 += dxdy * (rectangle[minRecY_i, minRecY_j] - y1);
-                        y1 = rectangle[minRecY_i, minRecY_j];
-                    }
-                    else if ((codeEnd & 8) == 8)
-                    {
-                        x1 += dxdy * (y1 - rectangle[maxRecY_i, maxRecY_j]);
-                        y1 = rectangle[maxRecY_i, maxRecY_j];
-                    }
+                    double[] tempPoints = MovePoint(codeEnd, y1, x1, dxdy, dydx);
+                    x1 = tempPoints[0]; y1 = tempPoints[1];
                     codeEnd = DefineCode(x1, y1);
                 }
             }
             
             return false;
+        }
+
+        private double[] MovePoint(int code, double y, double x, double dxdy, double dydx)
+        {
+            if ((code & 1) == 1)
+            {
+                y += dydx * (rectangle[minRecX_i, minRecX_j] - x);    //(delta y / delta x) * delta x
+                x = rectangle[minRecX_i, minRecX_j];
+            }
+            else if ((code & 2) == 2)
+            {
+                y += dydx * (rectangle[maxRecX_i, maxRecX_j] - x);
+                x = rectangle[maxRecX_i, maxRecX_j];
+            }
+            else if ((code & 4) == 4)
+            {
+                x += dxdy * (rectangle[minRecY_i, minRecY_j] - y);
+                y = rectangle[minRecY_i, minRecY_j];
+            }
+            else if ((code & 8) == 8)
+            {
+                x += dxdy * (rectangle[maxRecY_i, maxRecY_j] - y);
+                y = rectangle[maxRecY_i, maxRecY_j];
+            }
+
+            return new double[2] { x, y };
         }
 
         public void PutPixel(int x, int y, bool[,] pixels)

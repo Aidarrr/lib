@@ -1,5 +1,27 @@
+/*
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.function.DoubleUnaryOperator;
+
+enum Level {
+    HIGH  (3),  //calls constructor with value 3
+    MEDIUM(2),  //calls constructor with value 2
+    LOW   (1)   //calls constructor with value 1
+    ; // semicolon needed when fields / methods follow
+
+
+    private final int levelCode;
+
+    Level(int levelCode) {
+        this.levelCode = levelCode;
+    }
+
+    public int getLevelCode() {
+        return this.levelCode;
+    }
+
+}
 
 public class Main {
 
@@ -94,18 +116,102 @@ public class Main {
     }
 
 
-    public static void main(String[] args) {
-        String [] roles= {
-                "Городничий","Аммос Федорович",
-                "Артемий Филиппович",
-                "Лука Лукич"};
-        String [] textLines={"Городничий: Я пригласил вас, господа, с тем, чтобы сообщить вам пренеприятное известие: к нам едет ревизор.",
-                "Аммос Федорович: Как ревизор?",
-                "Артемий Филиппович: Как ревизор?",
-                "Городничий: Ревизор из Петербурга, инкогнито. И еще с секретным предписаньем.",
-                "Аммос Федорович: Вот те на!",
-                "Артемий Филиппович: Вот не было заботы, так подай!",
-                "Лука Лукич: Господи боже! еще и с секретным предписаньем!"};
-        System.out.println(printTextPerRole(roles, textLines));
+    public String doubleChar(String str) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < str.length(); i++) {
+            for (int j = 0; j < 2; j++) {
+                stringBuilder.append(str.charAt(i));
+            }
         }
+        return new String(stringBuilder);
+    }
+
+    public static String wordEnds(String str, String word) {
+        String[] arr = str.split(word);
+        StringBuilder stringBuilder = new StringBuilder();
+        if(arr[0].equals(""))
+            stringBuilder.append(arr[0].charAt(arr[0].length() - 1));
+        for (int i = 1; i < arr.length - 1; i++) {
+            stringBuilder.append(arr[i].charAt(0));
+            stringBuilder.append(arr[i].charAt(arr[i].length() - 1));
+        }
+        stringBuilder.append(arr[arr.length - 1].charAt(0));
+        return new String(stringBuilder);
+    }
+
+
+    public static double sqrt(double x) throws IllegalArgumentException{
+        if(x < 0)
+            throw new IllegalArgumentException(String.format("Expected non-negative number, got %f", x));
+
+        return Math.sqrt(x);
+    }
+
+
+
+    public static void main(String[] args) {
+        */
+/*System.out.println("Количество элементов в массиве:");
+        Scanner in = new Scanner(System.in);
+        int n = in.nextInt();
+
+        System.out.println("Элементы массива:");
+        int[] a = new int[n];
+        for (int i = 0; i < n; i++) {
+            a[i] = in.nextInt();
+        }
+        System.out.println("ai >= i :");
+        for (int i = 0; i < a.length; i++) {
+            if(a[i] >= i)
+                System.out.println(a[i]);
+        }*//*
+
+
+        */
+/*int[][] arr = new int[n][n];
+        int[] diagonal = new int[n];
+        int[] diagonal2 = new int[n];
+        System.out.println("Элементы двумерного массива:");
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[i].length; j++) {
+                arr[i][j] = in.nextInt();
+            }
+        }
+        System.out.println("Главная диагональ");
+        for (int i = 0, j = 0; i < arr.length; i++, j++) {
+            diagonal[i] = arr[i][j];
+            System.out.println(diagonal[i]);
+        }
+        System.out.println("Побочная диагональ");
+        for (int i = 0, j = n - 1; i < arr.length; i++, j--) {
+            diagonal2[i] = arr[i][j];
+            System.out.println(diagonal2[i]);
+        }*//*
+
+
+        */
+/**Lab 2 Part 2**//*
+
+
+        Gun gun = new Gun();
+        ColdSteel coldSteel = new ColdSteel();
+        Gun gun1 = new Gun();
+        ColdSteel coldSteel1 = new ColdSteel();
+        ColdSteel coldSteel2 = new ColdSteel();
+        ColdSteel coldSteel3 = new ColdSteel();
+        Gun gun3 = new Gun();
+        ArrayList<Weapon> weapons = new ArrayList<>();
+        weapons.add(gun);
+        weapons.add(gun1);
+        weapons.add(gun3);
+        weapons.add(coldSteel1);
+        weapons.add(coldSteel2);
+        weapons.add(coldSteel3);
+        weapons.add(coldSteel);
+        Armouries armouries = new Armouries(weapons);
+        System.out.println("В оружейной палате:");
+        armouries.printArmories();
+    }
 }
+
+*/
