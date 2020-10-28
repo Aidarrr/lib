@@ -10,17 +10,10 @@ using System.Windows.Forms;
 
 namespace Interpolation
 {
-    struct rgb
+    public struct vec2d
     {
-        int red;
-        int green;
-        int blue;
-    }
-
-    struct vec2d
-    {
-        int x;
-        int y;
+        public int x;
+        public int y;
 
         public vec2d(int x, int y)
         {
@@ -29,9 +22,9 @@ namespace Interpolation
         }
     }
 
-    struct triangle
+    public struct triangle
     {
-        vec2d[] vec2Ds;
+        public vec2d[] vec2Ds;
 
         public triangle(int x1, int y1, int x2, int y2, int x3, int y3)
         {
@@ -41,24 +34,33 @@ namespace Interpolation
 
     public partial class Form1 : Form
     {
-        static int widthGouraud = 532, heightGouraud = 341;
+        static int widthGouraud = 640, heightGouraud = 540;
+        static int widthBar = 640, heightBar = 540;
+        UInt32 RED = 0x00FF0000;
+        UInt32 GREEN = 0x0000FF00;
+        UInt32 BLUE = 0x000000FF;
         int step = 20;
-        //int[,] figure = new int[20, 4]
-        //{ {9, 2, 6, 3 }, { 9, 2, 12, 3 }, { 9, 2, 9, 5 },  { 7, 7, 9, 5 }, { 9, 5, 11, 7 },
-        //  {4, 6, 6, 3},{ 14, 6, 12, 3}, { 4, 6, 7, 7 }, { 14, 6, 11,7 }, { 7, 7, 8, 9 },
-        //  { 11, 7, 10, 9}, { 4, 6, 4, 9 }, { 14, 6, 14, 9 }, { 4, 9, 6, 11 }, { 12, 11, 14, 9 },
-        //  { 8, 9, 10, 9}, { 6, 11, 8, 9 }, { 12, 11, 10, 9}, { 6, 11, 9, 12 }, {12, 11, 9, 12 } };
-        
+
         triangle[] figure = new triangle[]
         {
-           new triangle(6, 3, 9, 2, 9, 5), 
-           new triangle(9, 2, 12, 3, 9, 5),
-           new triangle(12, 3, 14, 6, 9, 5),
-           new triangle(9, 5, 11, 7, 14, 6),
-           new triangle(),
-           new triangle(),
-           new triangle(),
-           new triangle(),
+           new triangle(13, 8, 7, 4, 13, 2),
+           new triangle(13, 8, 19, 4, 13, 2),
+           new triangle(23, 10, 13, 8, 19, 4),
+           new triangle(17, 12, 23, 10, 13, 8),
+           new triangle(23, 16, 17, 12, 23, 10),
+           new triangle(15, 16, 23, 16, 17, 12),
+           new triangle(19, 20, 15, 16, 23, 16),
+           new triangle(13, 22, 19, 20, 15, 16),
+           new triangle(13, 22, 11, 16, 15, 16),
+           new triangle(13, 22, 7, 20, 11, 16),
+           new triangle(7, 20, 3, 16, 11, 16),
+           new triangle(3, 16, 11, 16, 9, 12),
+           new triangle(3, 16, 9, 12, 3, 10),
+           new triangle(9, 12, 3, 10, 13, 8),
+           new triangle(3, 10, 13, 8, 7, 4),
+           new triangle(9, 12, 17, 12, 13, 8),
+           new triangle(11, 16, 9, 12, 17, 12),
+           new triangle(11, 16, 15, 16, 17, 12)
         };
 
         public Form1()
@@ -69,6 +71,12 @@ namespace Interpolation
         public void PutPixel(int x, int y, bool[,] pixels)
         {
             pixels[x, y] = true;
+        }
+
+        public void PutPixel(int x, int y, bool[,] pixels, UInt32 color, UInt32[,] pixelsColor)
+        {
+            pixels[x, y] = true;
+            pixelsColor[x, y] = color;
         }
 
         void Brezenham(int xn, int yn, int xk, int yk, bool[,] pixels)
@@ -107,7 +115,7 @@ namespace Interpolation
             }
         }
 
-        public void DrawGrid(int width, int height, bool[,] pixels, Graphics graphics)
+        public void DrawGrid(int width, int height, bool[,] pixels, Graphics graphics, UInt32[,] pixelsColor)
         {
             for (int y = 0; y < height / step; y++)
             {
@@ -115,27 +123,418 @@ namespace Interpolation
                 {
                     graphics.DrawRectangle(Pens.Black, x * step, height - 1 - y * step - step, step, step);
                     if (pixels[x, y])
-                        graphics.FillRectangle(Brushes.Green, x * step + 2, height - 1 - y * step - step + 2, step - 3, step - 3);
-                    
+                    {
+                        //graphics.FillRectangle(Brushes.Green, x * step + 2, height - 1 - y * step - step + 2, step - 3, step - 3);
+                        
+                        Brush brush = new SolidBrush(Color.FromArgb((int)pixelsColor[x, y]));
+                                                   
+                        graphics.FillRectangle(brush, x * step + 2, height - 1 - y * step - step + 2, step - 3, step - 3);
+                    }
                 }
             }
         }
 
-        public void Figure_Brezenham(bool[,] pixels)
+        static void Swap<T>(ref T lhs, ref T rhs)
         {
-            for (int i = 0; i < figure.GetLength(0); i++)
+            T temp;
+            temp = lhs;
+            lhs = rhs;
+            rhs = temp;
+        }
+
+        public void Gourand(triangle triangle, bool[,] pixels, UInt32[,] pixelsColor)
+        {
+            vec2d t0 = triangle.vec2Ds[2];
+            vec2d t1 = triangle.vec2Ds[1];
+            vec2d t2 = triangle.vec2Ds[0];
+            Point A = new Point();
+            Point B = new Point();
+
+            int total_height = t2.y - t0.y;
+            if (t1.y - t0.y != 0)
             {
-                Brezenham(figure[i, 0], figure[i, 1], figure[i, 2], figure[i, 3], pixels);
+                if (t1.x > t2.x || t0.x < t2.x && t1.x == t2.x)
+                {
+                    for (int y = t0.y + 1; y <= t1.y; y++)
+                    {
+                        A.Y = y;
+                        B.Y = y;
+                        int segment_height = t1.y - t0.y;
+                        float alpha = (float)(y - t0.y) / total_height;
+                        float beta = (float)(y - t0.y) / segment_height;
+                        A.X = (int)(t0.x + (t2.x - t0.x) * alpha);
+                        B.X = (int)(t0.x + (t1.x - t0.x) * beta);
+                        if (A.X > B.X) Swap(ref A, ref B);
+                        UInt32 color_left = getColorGourand(pixelsColor[t0.x, t0.y], pixelsColor[t2.x, t2.y], y, t0.y, t2.y);
+                        UInt32 color_right = getColorGourand(pixelsColor[t0.x, t0.y], pixelsColor[t1.x, t1.y], y, t0.y, t1.y);
+                        for (int j = A.X; j <= B.X; j++)
+                        {
+                            UInt32 col = getColorGourand(color_right, color_left, j, B.X, A.X);
+                            PutPixel(j, y, pixels, col, pixelsColor);
+                        }
+                    }
+                }
+                else
+                {
+                    for (int y = t0.y + 1; y <= t1.y; y++)
+                    {
+                        A.Y = y;
+                        B.Y = y;
+                        int segment_height = t1.y - t0.y;
+                        float alpha = (float)(y - t0.y) / segment_height;
+                        float beta = (float)(y - t0.y) / total_height; 
+                        A.X = (int)(t0.x + (t1.x - t0.x) * alpha);
+                        B.X = (int)(t0.x + (t2.x - t0.x) * beta);
+                        if (A.X > B.X) Swap(ref A, ref B);
+                        UInt32 color_left = getColorGourand(pixelsColor[t0.x, t0.y], pixelsColor[t1.x, t1.y], y, t0.y, t1.y);
+                        UInt32 color_right = getColorGourand(pixelsColor[t0.x, t0.y], pixelsColor[t2.x, t2.y], y, t0.y, t2.y);
+                        for (int j = A.X; j <= B.X; j++)
+                        {
+                            UInt32 col = getColorGourand(color_right, color_left, j, B.X, A.X);
+                            PutPixel(j, y, pixels, col, pixelsColor);
+                        }
+                    }
+                }
             }
+            if (t2.y - t1.y != 0)
+            {
+                int start;
+                if (t1.y == t0.y)
+                    start = t1.y;
+                else
+                    start = t1.y + 1;
+
+                if (t1.x > t2.x || t0.x < t2.x && t1.x == t2.x)
+                {
+                    for (int y = start; y < t2.y; y++)
+                    {
+                        A.Y = y;
+                        B.Y = y;
+                        int segment_height = t2.y - t1.y;
+                        float alpha = (float)(y - t0.y) / total_height;
+                        float beta = (float)(y - t1.y) / segment_height;
+                        A.X = (int)(t0.x + (t2.x - t0.x) * alpha);
+                        B.X = (int)(t1.x + (t2.x - t1.x) * beta);
+                        if (A.X > B.X) Swap(ref A, ref B);
+                        UInt32 color_left = getColorGourand(pixelsColor[t0.x, t0.y], pixelsColor[t2.x, t2.y], y, t0.y, t2.y);
+                        UInt32 color_right = getColorGourand(pixelsColor[t1.x, t1.y], pixelsColor[t2.x, t2.y], y, t1.y, t2.y);
+                        for (int j = A.X; j <= B.X; j++)
+                        {
+                            UInt32 col = getColorGourand(color_right, color_left, j, B.X, A.X);
+                            PutPixel(j, y, pixels, col, pixelsColor);
+                        }
+                    }
+                }
+                else
+                {
+                    for (int y = start; y < t2.y; y++)
+                    {
+                        A.Y = y;
+                        B.Y = y;
+                        int segment_height = t2.y - t1.y;
+                        float alpha = (float)(y - t1.y) / segment_height;
+                        float beta = (float)(y - t0.y) / total_height; 
+                        A.X = (int)(t1.x + (t2.x - t1.x) * alpha);
+                        B.X = (int)(t0.x + (t2.x - t0.x) * beta);
+                        if (A.X > B.X) Swap(ref A, ref B);
+                        UInt32 color_left = getColorGourand(pixelsColor[t1.x, t1.y], pixelsColor[t2.x, t2.y], y, t1.y, t2.y);
+                        UInt32 color_right = getColorGourand(pixelsColor[t0.x, t0.y], pixelsColor[t2.x, t2.y], y, t0.y, t2.y);
+                        for (int j = A.X; j <= B.X; j++)
+                        {
+                            UInt32 col = getColorGourand(color_right, color_left, j, B.X, A.X);
+                            PutPixel(j, y, pixels, col, pixelsColor);
+                        }
+                    }
+                }
+            }
+        }
+
+        //private void gourandPointCalculating(vec2d higherPoint, vec2d lowerPoint, int totalHeight, int alphaDivider, int betaDivider, int alphaSubtrahend, int betaSubtrahend,
+        //                                     vec2d t2, vec2d a, vec2d b, vec2d pointForA, vec2d pointForB, )
+        //{
+        //    Point A = new Point();
+        //    Point B = new Point();
+
+        //    for (int y = lowerPoint.y + 1; y < higherPoint.y; y++)
+        //    {
+        //        A.Y = y;
+        //        B.Y = y;
+                
+        //        int segment_height = higherPoint.y - lowerPoint.y;
+
+        //        float alpha = (float)(y - t1.y) / alphaDivider;
+        //        float beta = (float)(y - t0.y) / betaDivider;
+
+        //        A.X = (int)(t1.x + (t2.x - t1.x) * alpha);
+        //        B.X = (int)(t0.x + (t2.x - t0.x) * beta);
+        //        if (A.X > B.X) Swap(ref A, ref B);
+        //        UInt32 color_left = getColorGourand(pixelsColor[t1.x, t1.y], pixelsColor[t2.x, t2.y], y, t1.y, t2.y);
+        //        UInt32 color_right = getColorGourand(pixelsColor[t0.x, t0.y], pixelsColor[t2.x, t2.y], y, t0.y, t2.y);
+        //        for (int j = A.X; j <= B.X; j++)
+        //        {
+        //            UInt32 col = getColorGourand(color_right, color_left, j, B.X, A.X);
+        //            PutPixel(j, y, pixels, col, pixelsColor);
+        //        }
+        //    }
+        //}
+
+        private UInt32 getColorGourand(UInt32 colorLeft, UInt32 colorRight, int x, int a, int b)
+        {
+            double d = (double)(x - b) / (double)(a - b);
+            double d2 = (double)(a - x) / (double)(a - b);
+
+            UInt32 redInterpolation = RGBInterpolation(d, d2, colorLeft, colorRight, 16, RED);
+            UInt32 greenInterpolation = RGBInterpolation(d, d2, colorLeft, colorRight, 8, GREEN);
+            UInt32 blueInterpolation = RGBInterpolation(d, d2, colorLeft, colorRight, 0, BLUE);
+
+            return 0xFF000000 | redInterpolation | greenInterpolation | blueInterpolation;
+        }
+
+        private UInt32 RGBInterpolation(double firstParametr, double secondParametr, UInt32 colorLeft, UInt32 colorRight, int numberOfBits, UInt32 rgbPart)
+        {
+            return (UInt32)(firstParametr * ((colorLeft & rgbPart) >> numberOfBits) + secondParametr * ((colorRight & rgbPart) >> numberOfBits)) << numberOfBits;
+        }
+
+        public UInt32 getColorBarycentricCoordinates(int x1, int y1, int x2, int y2, int x3, int y3, int x, int y, UInt32 color1, UInt32 color2, UInt32 color3)
+        {
+            UInt32 pixelValue = 0xFFFFFFFF;
+            
+            double l1, l2, l3;
+            l1 = ((y2 - y3) * ((double)(x) - x3) + (x3 - x2) * ((double)(y) - y3)) /
+                ((y2 - y3) * (x1 - x3) + (x3 - x2) * (y1 - y3));
+            l2 = ((y3 - y1) * ((double)(x) - x3) + (x1 - x3) * ((double)(y) - y3)) /
+                ((y2 - y3) * (x1 - x3) + (x3 - x2) * (y1 - y3));
+            l3 = 1 - l1 - l2;
+
+            if (l1 >= 0 && l1 <= 1 && l2 >= 0 && l2 <= 1 && l3 >= 0 && l3 <= 1)
+            {
+                UInt32 redInterpolation = (UInt32)(l1 * ((color1 & RED) >> 16) + l2 * ((color2 & RED) >> 16) + l3 * ((color3 & RED) >> 16)) << 16;
+                UInt32 greenInterpolation = (UInt32)(l1 * ((color1 & GREEN) >> 8) + l2 * ((color2 & GREEN) >> 8) + l3 * ((color3 & GREEN) >> 8)) << 8;
+                UInt32 blueInterpolation = (UInt32)(l1 * (color1 & BLUE) + l2 * (color2 & BLUE) + l3 * (color3 & BLUE));
+
+                pixelValue = 
+                    (UInt32)0xFF000000 |
+                    redInterpolation |
+                    greenInterpolation |
+                    blueInterpolation;
+            }
+            return pixelValue;
+        }
+
+        public void BarycentricCoordinates(triangle triangle, bool[,] pixels, UInt32[,] pixelsColor)
+        {
+            vec2d v0 = triangle.vec2Ds[0];
+            vec2d v1 = triangle.vec2Ds[1];
+            vec2d v2 = triangle.vec2Ds[2];
+
+            UInt32 colorV0 = pixelsColor[v0.x, v0.y];
+            UInt32 colorV1 = pixelsColor[v1.x, v1.y];
+            UInt32 colorV2 = pixelsColor[v2.x, v2.y];
+
+            for (int x = 0; x < widthBar / step; x++)
+            {
+                for (int y = 0; y < heightBar / step; y++)
+                {
+                    UInt32 pointColor = getColorBarycentricCoordinates(v0.x, v0.y, v1.x, v1.y, v2.x, v2.y, x, y, colorV0, colorV1, colorV2);
+                    if (pointColor != 0xFFFFFFFF)
+                        PutPixel(x, y, pixels, pointColor, pixelsColor);
+                }
+            }
+        }
+
+        public void getFigureGourand(bool[,] pixels, UInt32[,] pixelsColor)
+        {
+            var rand = new Random();
+            var previous = figure[0].vec2Ds;
+            bool flag1 = false, flag2 = false, flag3 = false;
+
+            foreach (var triangle in figure)
+            {
+                Brezenham(triangle.vec2Ds[0].x, triangle.vec2Ds[0].y, triangle.vec2Ds[1].x, triangle.vec2Ds[1].y, pixels);
+                Brezenham(triangle.vec2Ds[1].x, triangle.vec2Ds[1].y, triangle.vec2Ds[2].x, triangle.vec2Ds[2].y, pixels);
+                Brezenham(triangle.vec2Ds[2].x, triangle.vec2Ds[2].y, triangle.vec2Ds[0].x, triangle.vec2Ds[0].y, pixels);
+
+                //pixelsColor[triangle.vec2Ds[0].x, triangle.vec2Ds[0].y] = 0x00FF00;
+                //pixelsColor[triangle.vec2Ds[1].x, triangle.vec2Ds[1].y] = 0xFF0000;
+                //pixelsColor[triangle.vec2Ds[2].x, triangle.vec2Ds[2].y] = 0x0000FF;
+                //foreach (var point in previous)
+                //{
+                //    if (point.x == triangle.vec2Ds[0].x && point.y == triangle.vec2Ds[0].y)
+                //    {
+                //        flag1 = true;
+                //        break;
+                //    }
+                //}
+
+                //foreach (var point in previous)
+                //{
+                //    if (point.x == triangle.vec2Ds[1].x && point.y == triangle.vec2Ds[1].y)
+                //    {
+                //        flag2 = true;
+                //        break;
+                //    }
+
+                //}
+
+                //foreach (var point in previous)
+                //{
+                //    if (point.x == triangle.vec2Ds[2].x && point.y == triangle.vec2Ds[2].y)
+                //    {
+                //        flag3 = true;
+                //        break;
+                //    }
+                //}
+
+                //if(!flag1)
+                //    pixelsColor[triangle.vec2Ds[0].x, triangle.vec2Ds[0].y] = (UInt32)rand.Next(0, 0xFFFFFF);
+                //if(!flag2)
+                //    pixelsColor[triangle.vec2Ds[1].x, triangle.vec2Ds[1].y] = (UInt32)rand.Next(0, 0xFFFFFF);
+                //if (!flag3)
+                //    pixelsColor[triangle.vec2Ds[2].x, triangle.vec2Ds[2].y] = (UInt32)rand.Next(0, 0xFFFFFF);
+
+                
+
+                pixelsColor[triangle.vec2Ds[0].x, triangle.vec2Ds[0].y] = (UInt32)rand.Next(0, 0xFFFFFF);
+                pixelsColor[triangle.vec2Ds[1].x, triangle.vec2Ds[1].y] = (UInt32)rand.Next(0, 0xFFFFFF);
+                pixelsColor[triangle.vec2Ds[2].x, triangle.vec2Ds[2].y] = (UInt32)rand.Next(0, 0xFFFFFF);
+                Gourand(triangle, pixels, pixelsColor);
+                //previous = triangle.vec2Ds;
+                //flag1 = flag2 = flag3 = false;
+            }
+        }
+
+        public void getFigureBarycentric(bool[,] pixels, UInt32[,] pixelsColor)
+        {
+            var rand = new Random();
+            foreach (var triangle in figure)
+            {
+                Brezenham(triangle.vec2Ds[0].x, triangle.vec2Ds[0].y, triangle.vec2Ds[1].x, triangle.vec2Ds[1].y, pixels);
+                Brezenham(triangle.vec2Ds[1].x, triangle.vec2Ds[1].y, triangle.vec2Ds[2].x, triangle.vec2Ds[2].y, pixels);
+                Brezenham(triangle.vec2Ds[2].x, triangle.vec2Ds[2].y, triangle.vec2Ds[0].x, triangle.vec2Ds[0].y, pixels);
+
+                //pixelsColor[triangle.vec2Ds[0].x, triangle.vec2Ds[0].y] = 0x00FF00;
+                //pixelsColor[triangle.vec2Ds[1].x, triangle.vec2Ds[1].y] = 0xFF0000;
+                //pixelsColor[triangle.vec2Ds[2].x, triangle.vec2Ds[2].y] = 0x0000FF;
+
+                pixelsColor[triangle.vec2Ds[0].x, triangle.vec2Ds[0].y] = (UInt32)rand.Next(0, 0xFFFFFF);
+                pixelsColor[triangle.vec2Ds[1].x, triangle.vec2Ds[1].y] = (UInt32)rand.Next(0, 0xFFFFFF);
+                pixelsColor[triangle.vec2Ds[2].x, triangle.vec2Ds[2].y] = (UInt32)rand.Next(0, 0xFFFFFF);
+
+                BarycentricCoordinates(triangle, pixels, pixelsColor);
+            }
+        }
+
+        private void Fill(UInt32[,] pixelsColor)
+        {
+            for (int i = 0; i < pixelsColor.GetLength(0); i++)
+            {
+                for (int j = 0; j < pixelsColor.GetLength(1); j++)
+                {
+                    pixelsColor[i, j] = 0xFFFFFF;
+                }
+            }
+        }
+
+        private Bitmap bilinealInterpolation(Bitmap initialBMP, int scaleX, int scaleY)
+        {
+            Bitmap scaledBMP = new Bitmap(initialBMP.Width * scaleX, initialBMP.Height * scaleY);
+            UInt32[,] initialColors = new UInt32[initialBMP.Width, initialBMP.Height];
+            UInt32[,] scaledColors = new UInt32[initialBMP.Width * scaleX, initialBMP.Height * scaleY];
+
+            for (int x = 0; x < initialBMP.Width; x++)
+            {
+                for (int y = 0; y < initialBMP.Height; y++)
+                {
+                    initialColors[x, y] = (UInt32)initialBMP.GetPixel(x, y).ToArgb();
+                    scaledColors[scaleX * x, scaleY * y] = initialColors[x, y];
+                }
+            }
+
+            for (int y = 0; y < scaledBMP.Height; y += scaleY)
+            {
+                for (int initX = 0; initX < scaledBMP.Width - scaleX; initX += scaleX)
+                {
+                    int start = initX;
+                    int end = initX + scaleX;
+
+                    for (int x = start + 1; x < end; x++)
+                    {
+                        //var left = (end - x) / scaleX;
+                        var right = (x - start) / scaleX;
+                        var left = (1 - right);
+                        UInt32 redInterpolation = (UInt32)(left * ((scaledColors[start, y] & RED) >> 16) + right * ((scaledColors[end, y] & RED) >> 16)) << 16;
+                        UInt32 greenInterpolation = (UInt32)(left * ((scaledColors[start, y] & GREEN) >> 8) + right * ((scaledColors[end, y] & GREEN) >> 8)) << 8;
+                        UInt32 blueInterpolation = (UInt32)(left * (scaledColors[start, y] & BLUE) + right * (scaledColors[end, y] & BLUE));
+
+                        
+                        
+                        scaledColors[x, y] = 0xFF000000 | redInterpolation | greenInterpolation | blueInterpolation;
+                    }
+                }
+            }
+
+            for (int x = 0; x < scaledBMP.Width; x++)
+            {
+                for (int initY = 0; initY < scaledBMP.Height - scaleY; initY += scaleY)
+                {
+                    int start = initY;
+                    int end = initY + scaleY;
+
+                    for (int y = start + 1; y < end; y++)
+                    {
+                        //var left = (end - y) / scaleY;
+                        var right = (y - start) / scaleY;
+                        var left = 1 - right;
+                        UInt32 redInterpolation = (UInt32)(left * ((scaledColors[x, start] & RED) >> 16) + right * ((scaledColors[x, end] & RED) >> 16)) << 16;
+                        UInt32 greenInterpolation = (UInt32)(left * ((scaledColors[x, start] & GREEN) >> 8) + right * ((scaledColors[x, end] & GREEN) >> 8)) << 8;
+                        UInt32 blueInterpolation = (UInt32)(left * (scaledColors[x, start] & BLUE) + right * (scaledColors[x, end] & BLUE));
+
+                        var result = 0xFF000000 | redInterpolation | greenInterpolation | blueInterpolation;
+                        if(result != 0xFF000000 && result != 0xFFFFFFFF)
+                            scaledColors[x, y] = result;
+                    }
+                }
+            }
+
+            for (int x = 0; x < scaledBMP.Width; x++)
+            {
+                for (int y = 0; y < scaledBMP.Height; y++)
+                {
+                    scaledBMP.SetPixel(x, y, Color.FromArgb((int)scaledColors[x, y]));
+                }
+            }
+
+
+            return scaledBMP;
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            bool[,] pixelsFigure = new bool[(widthGouraud / step), (heightGouraud / step)];
-            Bitmap bitmap = new Bitmap(widthGouraud, heightGouraud);
-            Graphics graphics = Graphics.FromImage(bitmap);
-            
+            bool[,] pixelsGourand = new bool[(widthGouraud / step), (heightGouraud / step)];
+            Bitmap bitmapGourand = new Bitmap(widthGouraud, heightGouraud);
+            Graphics graphicsGourand = Graphics.FromImage(bitmapGourand);
 
+            UInt32[,] pixelsColorGourand = new UInt32[(widthGouraud / step), (heightGouraud / step)];
+            Fill(pixelsColorGourand);
+            bool[,] pixelsBar = new bool[(widthBar / step), (heightBar / step)];
+            Bitmap bitmapBar = new Bitmap(widthBar, heightBar);
+            Graphics graphicsBar = Graphics.FromImage(bitmapBar);
+
+            UInt32[,] pixelsColorBar = new UInt32[(widthBar / step), (heightBar / step)];
+
+            Bitmap bitmapForInitialImage = new Bitmap("dig10k_flowers.bmp");
+            pbInitialImage.Image = bitmapForInitialImage;
+
+            Bitmap bmpScaledImage = bilinealInterpolation(bitmapForInitialImage, 3, 3);
+            pbScaledImage.Image = bmpScaledImage;
+
+            getFigureGourand(pixelsGourand, pixelsColorGourand);
+            getFigureBarycentric(pixelsBar, pixelsColorBar);
+            DrawGrid(widthGouraud, heightGouraud, pixelsGourand, graphicsGourand, pixelsColorGourand);
+            DrawGrid(widthBar, heightBar, pixelsBar, graphicsBar, pixelsColorBar);
+
+            pbGouraud.Image = bitmapGourand;
+            pbBarycentric.Image = bitmapBar;
         }
     }
 }

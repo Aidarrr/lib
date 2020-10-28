@@ -1,0 +1,10 @@
+D:\Programming\lib\Interpolation\bin\Debug\Interpolation.exe.config
+D:\Programming\lib\Interpolation\bin\Debug\Interpolation.exe
+D:\Programming\lib\Interpolation\bin\Debug\Interpolation.pdb
+D:\Programming\lib\Interpolation\obj\Debug\Interpolation.csprojAssemblyReference.cache
+D:\Programming\lib\Interpolation\obj\Debug\Interpolation.Form1.resources
+D:\Programming\lib\Interpolation\obj\Debug\Interpolation.Properties.Resources.resources
+D:\Programming\lib\Interpolation\obj\Debug\Interpolation.csproj.GenerateResource.cache
+D:\Programming\lib\Interpolation\obj\Debug\Interpolation.csproj.CoreCompileInputs.cache
+D:\Programming\lib\Interpolation\obj\Debug\Interpolation.exe
+D:\Programming\lib\Interpolation\obj\Debug\Interpolation.pdb
