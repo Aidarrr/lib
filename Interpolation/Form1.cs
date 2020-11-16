@@ -150,7 +150,8 @@ namespace Interpolation
             Point A = new Point();
             Point B = new Point();
 
-            int total_height = t2.y - t0.y;
+            int totalHeight = t2.y - t0.y;
+
             if (t1.y - t0.y != 0)
             {
                 if (t1.x > t2.x || t0.x < t2.x && t1.x == t2.x)
@@ -159,17 +160,21 @@ namespace Interpolation
                     {
                         A.Y = y;
                         B.Y = y;
-                        int segment_height = t1.y - t0.y;
-                        float alpha = (float)(y - t0.y) / total_height;
-                        float beta = (float)(y - t0.y) / segment_height;
+                        int segmentHeight = t1.y - t0.y;
+
+                        float alpha = (float)(y - t0.y) / totalHeight;
+                        float beta = (float)(y - t0.y) / segmentHeight;
+
                         A.X = (int)(t0.x + (t2.x - t0.x) * alpha);
                         B.X = (int)(t0.x + (t1.x - t0.x) * beta);
                         if (A.X > B.X) Swap(ref A, ref B);
-                        UInt32 color_left = getColorGourand(pixelsColor[t0.x, t0.y], pixelsColor[t2.x, t2.y], y, t0.y, t2.y);
-                        UInt32 color_right = getColorGourand(pixelsColor[t0.x, t0.y], pixelsColor[t1.x, t1.y], y, t0.y, t1.y);
+
+                        UInt32 colorLeft = getColorGourand(pixelsColor[t0.x, t0.y], pixelsColor[t2.x, t2.y], y, t0.y, t2.y);
+                        UInt32 colorRight = getColorGourand(pixelsColor[t0.x, t0.y], pixelsColor[t1.x, t1.y], y, t0.y, t1.y);
+
                         for (int j = A.X; j <= B.X; j++)
                         {
-                            UInt32 col = getColorGourand(color_right, color_left, j, B.X, A.X);
+                            UInt32 col = getColorGourand(colorRight, colorLeft, j, B.X, A.X);
                             PutPixel(j, y, pixels, col, pixelsColor);
                         }
                     }
@@ -180,17 +185,20 @@ namespace Interpolation
                     {
                         A.Y = y;
                         B.Y = y;
-                        int segment_height = t1.y - t0.y;
-                        float alpha = (float)(y - t0.y) / segment_height;
-                        float beta = (float)(y - t0.y) / total_height; 
+                        int segmentHeight = t1.y - t0.y;
+                        float alpha = (float)(y - t0.y) / segmentHeight;
+                        float beta = (float)(y - t0.y) / totalHeight; 
+
                         A.X = (int)(t0.x + (t1.x - t0.x) * alpha);
                         B.X = (int)(t0.x + (t2.x - t0.x) * beta);
                         if (A.X > B.X) Swap(ref A, ref B);
-                        UInt32 color_left = getColorGourand(pixelsColor[t0.x, t0.y], pixelsColor[t1.x, t1.y], y, t0.y, t1.y);
-                        UInt32 color_right = getColorGourand(pixelsColor[t0.x, t0.y], pixelsColor[t2.x, t2.y], y, t0.y, t2.y);
+
+                        UInt32 colorLeft = getColorGourand(pixelsColor[t0.x, t0.y], pixelsColor[t1.x, t1.y], y, t0.y, t1.y);
+                        UInt32 colorRight = getColorGourand(pixelsColor[t0.x, t0.y], pixelsColor[t2.x, t2.y], y, t0.y, t2.y);
+
                         for (int j = A.X; j <= B.X; j++)
                         {
-                            UInt32 col = getColorGourand(color_right, color_left, j, B.X, A.X);
+                            UInt32 col = getColorGourand(colorRight, colorLeft, j, B.X, A.X);
                             PutPixel(j, y, pixels, col, pixelsColor);
                         }
                     }
@@ -210,17 +218,21 @@ namespace Interpolation
                     {
                         A.Y = y;
                         B.Y = y;
-                        int segment_height = t2.y - t1.y;
-                        float alpha = (float)(y - t0.y) / total_height;
-                        float beta = (float)(y - t1.y) / segment_height;
+                        int segmentHeight = t2.y - t1.y;
+
+                        float alpha = (float)(y - t0.y) / totalHeight;
+                        float beta = (float)(y - t1.y) / segmentHeight;
+
                         A.X = (int)(t0.x + (t2.x - t0.x) * alpha);
                         B.X = (int)(t1.x + (t2.x - t1.x) * beta);
                         if (A.X > B.X) Swap(ref A, ref B);
-                        UInt32 color_left = getColorGourand(pixelsColor[t0.x, t0.y], pixelsColor[t2.x, t2.y], y, t0.y, t2.y);
-                        UInt32 color_right = getColorGourand(pixelsColor[t1.x, t1.y], pixelsColor[t2.x, t2.y], y, t1.y, t2.y);
+
+                        UInt32 colorLeft = getColorGourand(pixelsColor[t0.x, t0.y], pixelsColor[t2.x, t2.y], y, t0.y, t2.y);
+                        UInt32 colorRight = getColorGourand(pixelsColor[t1.x, t1.y], pixelsColor[t2.x, t2.y], y, t1.y, t2.y);
+
                         for (int j = A.X; j <= B.X; j++)
                         {
-                            UInt32 col = getColorGourand(color_right, color_left, j, B.X, A.X);
+                            UInt32 col = getColorGourand(colorRight, colorLeft, j, B.X, A.X);
                             PutPixel(j, y, pixels, col, pixelsColor);
                         }
                     }
@@ -231,52 +243,27 @@ namespace Interpolation
                     {
                         A.Y = y;
                         B.Y = y;
-                        int segment_height = t2.y - t1.y;
-                        float alpha = (float)(y - t1.y) / segment_height;
-                        float beta = (float)(y - t0.y) / total_height; 
+                        int segmentHeight = t2.y - t1.y;
+
+                        float alpha = (float)(y - t1.y) / segmentHeight;
+                        float beta = (float)(y - t0.y) / totalHeight; 
+
                         A.X = (int)(t1.x + (t2.x - t1.x) * alpha);
                         B.X = (int)(t0.x + (t2.x - t0.x) * beta);
                         if (A.X > B.X) Swap(ref A, ref B);
-                        UInt32 color_left = getColorGourand(pixelsColor[t1.x, t1.y], pixelsColor[t2.x, t2.y], y, t1.y, t2.y);
-                        UInt32 color_right = getColorGourand(pixelsColor[t0.x, t0.y], pixelsColor[t2.x, t2.y], y, t0.y, t2.y);
+
+                        UInt32 colorLeft = getColorGourand(pixelsColor[t1.x, t1.y], pixelsColor[t2.x, t2.y], y, t1.y, t2.y);
+                        UInt32 colorRight = getColorGourand(pixelsColor[t0.x, t0.y], pixelsColor[t2.x, t2.y], y, t0.y, t2.y);
+
                         for (int j = A.X; j <= B.X; j++)
                         {
-                            UInt32 col = getColorGourand(color_right, color_left, j, B.X, A.X);
+                            UInt32 col = getColorGourand(colorRight, colorLeft, j, B.X, A.X);
                             PutPixel(j, y, pixels, col, pixelsColor);
                         }
                     }
                 }
             }
         }
-
-        //private void gourandPointCalculating(vec2d higherPoint, vec2d lowerPoint, int totalHeight, int alphaDivider, int betaDivider, int alphaSubtrahend, int betaSubtrahend,
-        //                                     vec2d t2, vec2d a, vec2d b, vec2d pointForA, vec2d pointForB, )
-        //{
-        //    Point A = new Point();
-        //    Point B = new Point();
-
-        //    for (int y = lowerPoint.y + 1; y < higherPoint.y; y++)
-        //    {
-        //        A.Y = y;
-        //        B.Y = y;
-                
-        //        int segment_height = higherPoint.y - lowerPoint.y;
-
-        //        float alpha = (float)(y - t1.y) / alphaDivider;
-        //        float beta = (float)(y - t0.y) / betaDivider;
-
-        //        A.X = (int)(t1.x + (t2.x - t1.x) * alpha);
-        //        B.X = (int)(t0.x + (t2.x - t0.x) * beta);
-        //        if (A.X > B.X) Swap(ref A, ref B);
-        //        UInt32 color_left = getColorGourand(pixelsColor[t1.x, t1.y], pixelsColor[t2.x, t2.y], y, t1.y, t2.y);
-        //        UInt32 color_right = getColorGourand(pixelsColor[t0.x, t0.y], pixelsColor[t2.x, t2.y], y, t0.y, t2.y);
-        //        for (int j = A.X; j <= B.X; j++)
-        //        {
-        //            UInt32 col = getColorGourand(color_right, color_left, j, B.X, A.X);
-        //            PutPixel(j, y, pixels, col, pixelsColor);
-        //        }
-        //    }
-        //}
 
         private UInt32 getColorGourand(UInt32 colorLeft, UInt32 colorRight, int x, int a, int b)
         {
@@ -331,9 +318,12 @@ namespace Interpolation
             UInt32 colorV1 = pixelsColor[v1.x, v1.y];
             UInt32 colorV2 = pixelsColor[v2.x, v2.y];
 
-            for (int x = 0; x < widthBar / step; x++)
+            int xStart = Math.Min(Math.Min(v0.x, v1.x), v2.x);
+            int xEnd = Math.Max(Math.Max(v0.x, v1.x), v2.x);
+
+            for (int x = xStart; x <= xEnd; x++)
             {
-                for (int y = 0; y < heightBar / step; y++)
+                for (int y = v2.y; y <= v0.y; y++)
                 {
                     UInt32 pointColor = getColorBarycentricCoordinates(v0.x, v0.y, v1.x, v1.y, v2.x, v2.y, x, y, colorV0, colorV1, colorV2);
                     if (pointColor != 0xFFFFFFFF)
@@ -345,8 +335,6 @@ namespace Interpolation
         public void getFigureGourand(bool[,] pixels, UInt32[,] pixelsColor)
         {
             var rand = new Random();
-            var previous = figure[0].vec2Ds;
-            bool flag1 = false, flag2 = false, flag3 = false;
 
             foreach (var triangle in figure)
             {
@@ -354,52 +342,15 @@ namespace Interpolation
                 Brezenham(triangle.vec2Ds[1].x, triangle.vec2Ds[1].y, triangle.vec2Ds[2].x, triangle.vec2Ds[2].y, pixels);
                 Brezenham(triangle.vec2Ds[2].x, triangle.vec2Ds[2].y, triangle.vec2Ds[0].x, triangle.vec2Ds[0].y, pixels);
 
-                //pixelsColor[triangle.vec2Ds[0].x, triangle.vec2Ds[0].y] = 0x00FF00;
-                //pixelsColor[triangle.vec2Ds[1].x, triangle.vec2Ds[1].y] = 0xFF0000;
-                //pixelsColor[triangle.vec2Ds[2].x, triangle.vec2Ds[2].y] = 0x0000FF;
-                //foreach (var point in previous)
-                //{
-                //    if (point.x == triangle.vec2Ds[0].x && point.y == triangle.vec2Ds[0].y)
-                //    {
-                //        flag1 = true;
-                //        break;
-                //    }
-                //}
-
-                //foreach (var point in previous)
-                //{
-                //    if (point.x == triangle.vec2Ds[1].x && point.y == triangle.vec2Ds[1].y)
-                //    {
-                //        flag2 = true;
-                //        break;
-                //    }
-
-                //}
-
-                //foreach (var point in previous)
-                //{
-                //    if (point.x == triangle.vec2Ds[2].x && point.y == triangle.vec2Ds[2].y)
-                //    {
-                //        flag3 = true;
-                //        break;
-                //    }
-                //}
-
-                //if(!flag1)
-                //    pixelsColor[triangle.vec2Ds[0].x, triangle.vec2Ds[0].y] = (UInt32)rand.Next(0, 0xFFFFFF);
-                //if(!flag2)
-                //    pixelsColor[triangle.vec2Ds[1].x, triangle.vec2Ds[1].y] = (UInt32)rand.Next(0, 0xFFFFFF);
-                //if (!flag3)
-                //    pixelsColor[triangle.vec2Ds[2].x, triangle.vec2Ds[2].y] = (UInt32)rand.Next(0, 0xFFFFFF);
-
-                
-
                 pixelsColor[triangle.vec2Ds[0].x, triangle.vec2Ds[0].y] = (UInt32)rand.Next(0, 0xFFFFFF);
                 pixelsColor[triangle.vec2Ds[1].x, triangle.vec2Ds[1].y] = (UInt32)rand.Next(0, 0xFFFFFF);
                 pixelsColor[triangle.vec2Ds[2].x, triangle.vec2Ds[2].y] = (UInt32)rand.Next(0, 0xFFFFFF);
+
+                pixelsColor[triangle.vec2Ds[0].x, triangle.vec2Ds[0].y] = 0xFF000000 | pixelsColor[triangle.vec2Ds[0].x, triangle.vec2Ds[0].y];
+                pixelsColor[triangle.vec2Ds[1].x, triangle.vec2Ds[1].y] = 0xFF000000 | pixelsColor[triangle.vec2Ds[1].x, triangle.vec2Ds[1].y];
+                pixelsColor[triangle.vec2Ds[2].x, triangle.vec2Ds[2].y] = 0xFF000000 | pixelsColor[triangle.vec2Ds[2].x, triangle.vec2Ds[2].y];
+
                 Gourand(triangle, pixels, pixelsColor);
-                //previous = triangle.vec2Ds;
-                //flag1 = flag2 = flag3 = false;
             }
         }
 
@@ -411,10 +362,6 @@ namespace Interpolation
                 Brezenham(triangle.vec2Ds[0].x, triangle.vec2Ds[0].y, triangle.vec2Ds[1].x, triangle.vec2Ds[1].y, pixels);
                 Brezenham(triangle.vec2Ds[1].x, triangle.vec2Ds[1].y, triangle.vec2Ds[2].x, triangle.vec2Ds[2].y, pixels);
                 Brezenham(triangle.vec2Ds[2].x, triangle.vec2Ds[2].y, triangle.vec2Ds[0].x, triangle.vec2Ds[0].y, pixels);
-
-                //pixelsColor[triangle.vec2Ds[0].x, triangle.vec2Ds[0].y] = 0x00FF00;
-                //pixelsColor[triangle.vec2Ds[1].x, triangle.vec2Ds[1].y] = 0xFF0000;
-                //pixelsColor[triangle.vec2Ds[2].x, triangle.vec2Ds[2].y] = 0x0000FF;
 
                 pixelsColor[triangle.vec2Ds[0].x, triangle.vec2Ds[0].y] = (UInt32)rand.Next(0, 0xFFFFFF);
                 pixelsColor[triangle.vec2Ds[1].x, triangle.vec2Ds[1].y] = (UInt32)rand.Next(0, 0xFFFFFF);
@@ -466,8 +413,8 @@ namespace Interpolation
                         UInt32 greenInterpolation = (UInt32)(left * ((scaledColors[start, y] & GREEN) >> 8) + right * ((scaledColors[end, y] & GREEN) >> 8)) << 8;
                         UInt32 blueInterpolation = (UInt32)(left * (scaledColors[start, y] & BLUE) + right * (scaledColors[end, y] & BLUE));
 
-                        
-                        
+
+
                         scaledColors[x, y] = 0xFF000000 | redInterpolation | greenInterpolation | blueInterpolation;
                     }
                 }
@@ -490,7 +437,7 @@ namespace Interpolation
                         UInt32 blueInterpolation = (UInt32)(left * (scaledColors[x, start] & BLUE) + right * (scaledColors[x, end] & BLUE));
 
                         var result = 0xFF000000 | redInterpolation | greenInterpolation | blueInterpolation;
-                        if(result != 0xFF000000 && result != 0xFFFFFFFF)
+                        if (result != 0xFF000000 && result != 0xFFFFFFFF)
                             scaledColors[x, y] = result;
                     }
                 }
@@ -522,7 +469,7 @@ namespace Interpolation
 
             UInt32[,] pixelsColorBar = new UInt32[(widthBar / step), (heightBar / step)];
 
-            Bitmap bitmapForInitialImage = new Bitmap("dig10k_flowers.bmp");
+            Bitmap bitmapForInitialImage = new Bitmap("sample_resized.bmp");
             pbInitialImage.Image = bitmapForInitialImage;
 
             Bitmap bmpScaledImage = bilinealInterpolation(bitmapForInitialImage, 3, 3);
