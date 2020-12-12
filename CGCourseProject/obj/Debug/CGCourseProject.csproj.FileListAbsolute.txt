@@ -1,0 +1,10 @@
+D:\Programming\lib\CGCourseProject\bin\Debug\CGCourseProject.exe.config
+D:\Programming\lib\CGCourseProject\bin\Debug\CGCourseProject.exe
+D:\Programming\lib\CGCourseProject\bin\Debug\CGCourseProject.pdb
+D:\Programming\lib\CGCourseProject\obj\Debug\CGCourseProject.csprojAssemblyReference.cache
+D:\Programming\lib\CGCourseProject\obj\Debug\CGCourseProject.Form1.resources
+D:\Programming\lib\CGCourseProject\obj\Debug\CGCourseProject.Properties.Resources.resources
+D:\Programming\lib\CGCourseProject\obj\Debug\CGCourseProject.csproj.GenerateResource.cache
+D:\Programming\lib\CGCourseProject\obj\Debug\CGCourseProject.csproj.CoreCompileInputs.cache
+D:\Programming\lib\CGCourseProject\obj\Debug\CGCourseProject.exe
+D:\Programming\lib\CGCourseProject\obj\Debug\CGCourseProject.pdb
