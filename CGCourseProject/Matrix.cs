@@ -44,6 +44,24 @@ namespace CGCourseProject
             matrixData[2, 3] = -(f + n) / (f - n);
         }
 
+        public Matrix(Vector x, Vector y, Vector z, Vector c) : this()
+        {
+            matrixData[0, 0] = x.x;
+            matrixData[0, 1] = x.y;
+            matrixData[0, 2] = x.z;
+            matrixData[0, 3] = -c.x;
+
+            matrixData[1, 0] = y.x;
+            matrixData[1, 1] = y.y;
+            matrixData[1, 2] = y.z;
+            matrixData[1, 3] = -c.y;
+
+            matrixData[2, 0] = z.x;
+            matrixData[2, 1] = z.y;
+            matrixData[2, 2] = z.z;
+            matrixData[2, 3] = -c.z;
+        }
+
         public Matrix(double sx, double sy, double sz, bool f) : this()
         {
             matrixData[0, 0] = sx;
@@ -64,10 +82,10 @@ namespace CGCourseProject
             double angleInRad = rad * angle;
 
             matrixData[0, 0] = Math.Cos(angleInRad);
-            matrixData[1, 0] = Math.Sin(angleInRad);
+            matrixData[0, 2] = Math.Sin(angleInRad);
 
-            matrixData[0, 1] = -Math.Sin(angleInRad);
-            matrixData[1, 1] = Math.Cos(angleInRad);
+            matrixData[2, 0] = -Math.Sin(angleInRad);
+            matrixData[2, 2] = Math.Cos(angleInRad);
         }
 
         static public Matrix operator *(Matrix m1, Matrix m2)

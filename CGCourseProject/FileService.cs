@@ -28,6 +28,11 @@ namespace CGCourseProject
             return polygons;
         }
 
+        public void SetPolygons(List<Polygon> polygons)
+        {
+            this.polygons = polygons;
+        }
+
         private void GetVectorsFromFile(StreamReader file)
         {
             string line;

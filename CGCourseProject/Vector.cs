@@ -57,5 +57,23 @@ namespace CGCourseProject
             v_res.w = arr_res[3];
             return v_res;
         }
+
+        static public Vector operator ^(Vector v1, Vector v2)   //Умножение двух векторов
+        {
+            Vector v_res = new Vector();
+            v_res.x = v1.y * v2.z - v1.z * v2.y;
+            v_res.y = v1.z * v2.x - v1.x * v2.z;
+            v_res.z = v1.x * v2.y - v1.y * v2.x;
+            return v_res;
+        }
+
+        static public Vector operator -(Vector v1, Vector v2)   //Вычитание векторов
+        {
+            Vector v_res = new Vector();
+            v_res.x = v1.x - v2.x;
+            v_res.y = v1.y - v2.y;
+            v_res.z = v1.z - v2.z;
+            return v_res;
+        }
     }
 }

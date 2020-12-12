@@ -15,7 +15,7 @@ namespace CGCourseProject
         static public int width = 920, height = 600;
         Bitmap pictureBitmap;
         Graphics graphics;
-        Pen pen;
+        FileService fileService = new FileService("Chair.obj");
 
         public Form1()
         {
@@ -25,11 +25,32 @@ namespace CGCourseProject
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void Form1_KeyPress(object sender, KeyPressEventArgs e)
         {
-            FileService fileService = new FileService("Chair.obj");
-            fileService.GetModelFromFile();
+            
+        }
 
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            Transformation transformation = new Transformation(fileService);
+
+            if (e.KeyCode == Keys.Right)
+            {
+                graphics.Clear(Color.White);
+                transformation.Rotate(10);
+                DrawModel();
+            }
+            else if (e.KeyCode == Keys.Left)
+            {
+                graphics.Clear(Color.White);
+                transformation.Rotate(-10);
+                DrawModel();
+            }
+            pictureBox1.Image = pictureBitmap;
+        }
+
+        private void DrawModel()
+        {
             Projection projection = new Projection(fileService);
             projection.ProjectAndNormalize();
             projection.SetGrayScaleColor();
@@ -43,9 +64,16 @@ namespace CGCourseProject
                 Vector v3 = polygon.vertexes[2];
 
                 Point[] points = new Point[3] { new Point(Convert.ToInt32(v1.x), Convert.ToInt32(v1.y)), new Point(Convert.ToInt32(v2.x), Convert.ToInt32(v2.y)), new Point(Convert.ToInt32(v3.x), Convert.ToInt32(v3.y)) };
-                
+
                 graphics.FillPolygon(new SolidBrush(Color.FromArgb((int)polygon.color)), points);
             }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            fileService.GetModelFromFile();
+
+            DrawModel();
 
             pictureBox1.Image = pictureBitmap;
         }

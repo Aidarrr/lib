@@ -22,7 +22,7 @@ namespace CGCourseProject
 
         public Polygon(Vector v1, Vector v2, Vector v3)
         {
-            vertexes = new Vector[3] {new Vector(v1), new Vector(v2), new Vector(v3) };
+            vertexes = new Vector[3] { new Vector(v1), new Vector(v2), new Vector(v3) };
         }
 
         public int GetZAverage()
@@ -44,6 +44,15 @@ namespace CGCourseProject
             color = 0xFF000000 | intermediateColor | intermediateColor << 8 | intermediateColor << 16;
 
             return color;
+        }
+
+        public static Polygon MultiplyPolygonOnMatrix(Matrix m, Polygon p)
+        {
+            Vector v1 = Vector.MatrixMultVector(m, p.vertexes[0]);
+            Vector v2 = Vector.MatrixMultVector(m, p.vertexes[1]);
+            Vector v3 = Vector.MatrixMultVector(m, p.vertexes[2]);
+
+            return new Polygon(v1, v2, v3);
         }
     }
 }
