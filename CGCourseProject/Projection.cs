@@ -10,7 +10,6 @@ namespace CGCourseProject
     {
         private List<Polygon> projectedPolygons;
         private FileService fileService;
-
         public Projection(FileService fileService)
         {
             this.fileService = fileService;
@@ -22,28 +21,17 @@ namespace CGCourseProject
             return projectedPolygons;
         }
 
-        public Matrix GetLookAtMatrix(Vector cameraPosition)
-        {
-            Vector x;
-            Vector y;
-            Vector z;
-            Vector u = new Vector(0,1,0);
-
-            Vector center = new Vector(0,0,0);
-
-            z = center - cameraPosition;
-            x = u ^ z;
-            y = z ^ x;
-
-            return new Matrix(x, y, z, cameraPosition);
-        }
+        
 
         public void ProjectAndNormalize()
         {
+            Transformation transformation = new Transformation(fileService);
+            Matrix t = transformation.LookAt(new Vector(0.2, 0.4, -0.8));
+
             Matrix viewportMatrix = new Matrix(0, 0, Form1.width, Form1.height);
             Matrix normalizationMatrix = new Matrix(fileService.minX, fileService.maxX, fileService.minY, fileService.maxY, fileService.minZ, fileService.maxZ);
 
-            Matrix projectionMatrix = viewportMatrix * normalizationMatrix;
+            Matrix projectionMatrix = viewportMatrix * normalizationMatrix * t * new Matrix(0, 0, 8);
 
             List<Polygon> originalPolygons = fileService.GetPolygons();
 

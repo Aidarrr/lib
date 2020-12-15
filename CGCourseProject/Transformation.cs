@@ -15,32 +15,70 @@ namespace CGCourseProject
             this.fileService = fileService;
         }
 
-        public void Rotate(double angle)
+        private void Transform (Matrix transformationMatrix)
         {
             List<Polygon> originalPolygons = fileService.GetPolygons();
-            Matrix rotationMatrix = new Matrix(angle);
-            List<Polygon> rotatedPolygons = new List<Polygon>();
+            List<Polygon> transformatedPolygons = new List<Polygon>();
 
             foreach (var polygon in originalPolygons)
             {
-                rotatedPolygons.Add(Polygon.MultiplyPolygonOnMatrix(rotationMatrix, polygon));
+                transformatedPolygons.Add(Polygon.MultiplyPolygonOnMatrix(transformationMatrix, polygon));
             }
 
-            fileService.SetPolygons(rotatedPolygons);
+            fileService.SetPolygons(transformatedPolygons);
+        }
+
+
+        public void Rotate(double angle)
+        {
+            Matrix rotationMatrix = new Matrix(angle);
+
+            Transform(rotationMatrix);
         }
 
         public void Translate(double tx, double ty, double tz)
         {
-            List<Polygon> originalPolygons = fileService.GetPolygons();
             Matrix translationMatrix = new Matrix(tx, ty, tz);
-            List<Polygon> translatedPolygons = new List<Polygon>();
+
+            Transform(translationMatrix);
+        }
+
+        public Matrix LookAt(Vector cameraPosition)
+        {
+            Vector x;
+            Vector y;
+            Vector z;
+            Vector u = new Vector(0, 1, 0);
+
+            Vector center = new Vector(0, 0, 0);
+
+            z = center - cameraPosition;
+            x = u ^ z;
+            y = z ^ x;
+
+            return new Matrix(x, y, z, cameraPosition);
+
+        }
+
+        private Vector GetModelCenter()
+        {
+            List<Polygon> originalPolygons = fileService.GetPolygons();
+            double epsilon = 0.1;
 
             foreach (var polygon in originalPolygons)
             {
-                translatedPolygons.Add(Polygon.MultiplyPolygonOnMatrix(translationMatrix, polygon));
+                foreach (var vector in polygon.vertexes)
+                {
+                    double length1 = Math.Abs(fileService.maxY - vector.y);
+                    double length2 = Math.Abs(fileService.minY - vector.y);
+
+                    if (Math.Abs(length2 - length1) < epsilon)
+                        return new Vector(vector.x / (fileService.maxX - fileService.minX), vector.y / (fileService.maxY - fileService.minY), vector.z / (fileService.maxZ - fileService.minZ));
+                }
+                
             }
 
-            fileService.SetPolygons(translatedPolygons);
+            return new Vector(0, 0, 0);
         }
     }
 }

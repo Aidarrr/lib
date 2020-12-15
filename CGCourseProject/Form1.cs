@@ -12,7 +12,7 @@ namespace CGCourseProject
 {
     public partial class Form1 : Form
     {
-        static public int width = 920, height = 600;
+        static public int width = 920, height = 700;
         Bitmap pictureBitmap;
         Graphics graphics;
         FileService fileService = new FileService("Chair.obj");
@@ -52,6 +52,7 @@ namespace CGCourseProject
         private void DrawModel()
         {
             Projection projection = new Projection(fileService);
+
             projection.ProjectAndNormalize();
             projection.SetGrayScaleColor();
             projection.SortProjectedPolygons();
@@ -73,7 +74,15 @@ namespace CGCourseProject
         {
             fileService.GetModelFromFile();
 
+            var k = (fileService.maxX - fileService.minX) / (fileService.maxY - fileService.minY);
+            width = Convert.ToInt32(height * k);
+
+            pictureBox1.Width = width + 300;
+            pictureBox1.Height = height + 200;
+            pictureBitmap = new Bitmap(width + 300, height + 200);
+            graphics = Graphics.FromImage(pictureBitmap);
             DrawModel();
+            
 
             pictureBox1.Image = pictureBitmap;
         }

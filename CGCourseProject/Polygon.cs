@@ -39,6 +39,9 @@ namespace CGCourseProject
             }
 
             zAverage = Convert.ToInt32(sum / countVertexes);
+            if (zAverage > 240)
+                zAverage = 240;
+
 
             UInt32 intermediateColor = Convert.ToUInt32(Math.Abs(zAverage));
             color = 0xFF000000 | intermediateColor | intermediateColor << 8 | intermediateColor << 16;

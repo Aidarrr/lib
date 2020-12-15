@@ -24,7 +24,7 @@ namespace CGCourseProject
 
         public Matrix(int x, int y, int w, int h) : this()
         {
-            matrixData[0, 3] = x + w / 2.0;
+            matrixData[0, 3] = x + 2 * w / 3.0;
             matrixData[1, 3] = y + h / 2.0;
             matrixData[2, 3] = 255.0 / 2.0;
 
@@ -49,17 +49,19 @@ namespace CGCourseProject
             matrixData[0, 0] = x.x;
             matrixData[0, 1] = x.y;
             matrixData[0, 2] = x.z;
-            matrixData[0, 3] = -c.x;
+            //matrixData[0, 3] = -c.x;
 
             matrixData[1, 0] = y.x;
             matrixData[1, 1] = y.y;
             matrixData[1, 2] = y.z;
-            matrixData[1, 3] = -c.y;
+            //matrixData[1, 3] = -c.y;
 
             matrixData[2, 0] = z.x;
             matrixData[2, 1] = z.y;
             matrixData[2, 2] = z.z;
-            matrixData[2, 3] = -c.z;
+            //matrixData[2, 3] = -c.z;
+
+
         }
 
         public Matrix(double sx, double sy, double sz, bool f) : this()
