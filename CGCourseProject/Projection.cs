@@ -26,12 +26,12 @@ namespace CGCourseProject
         public void ProjectAndNormalize()
         {
             Transformation transformation = new Transformation(fileService);
-            Matrix t = transformation.LookAt(new Vector(0.2, 0.4, -0.8));
+            Matrix lookAtMatrix = transformation.LookAt(new Vector(1, 1, -3));
 
             Matrix viewportMatrix = new Matrix(0, 0, Form1.width, Form1.height);
             Matrix normalizationMatrix = new Matrix(fileService.minX, fileService.maxX, fileService.minY, fileService.maxY, fileService.minZ, fileService.maxZ);
 
-            Matrix projectionMatrix = viewportMatrix * normalizationMatrix * t * new Matrix(0, 0, 8);
+            Matrix projectionMatrix = viewportMatrix * normalizationMatrix * lookAtMatrix * new Matrix(0.7,0.7,0.7,true);
 
             List<Polygon> originalPolygons = fileService.GetPolygons();
 

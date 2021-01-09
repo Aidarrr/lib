@@ -53,6 +53,7 @@ namespace CGCourseProject
             Vector center = new Vector(0, 0, 0);
 
             z = center - cameraPosition;
+            z.Normalize();
             x = u ^ z;
             y = z ^ x;
 
@@ -73,7 +74,7 @@ namespace CGCourseProject
                     double length2 = Math.Abs(fileService.minY - vector.y);
 
                     if (Math.Abs(length2 - length1) < epsilon)
-                        return new Vector(vector.x / (fileService.maxX - fileService.minX), vector.y / (fileService.maxY - fileService.minY), vector.z / (fileService.maxZ - fileService.minZ));
+                        return Vector.MatrixMultVector(new Matrix(fileService.minX, fileService.maxX, fileService.minY, fileService.maxY, fileService.minZ, fileService.maxZ), vector);
                 }
                 
             }

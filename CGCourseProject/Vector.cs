@@ -32,7 +32,7 @@ namespace CGCourseProject
             w = v.w;
         }
 
-        static public Vector MatrixMultVector(Matrix m, Vector v) //Умножение матрицы на вектор
+        static public Vector MatrixMultVector(Matrix m, Vector v)
         {
             double[] v1 = new double[4];
             v1[0] = v.x;
@@ -58,7 +58,7 @@ namespace CGCourseProject
             return v_res;
         }
 
-        static public Vector operator ^(Vector v1, Vector v2)   //Умножение двух векторов
+        static public Vector operator ^(Vector v1, Vector v2)   //Векторное умножение
         {
             Vector v_res = new Vector();
             v_res.x = v1.y * v2.z - v1.z * v2.y;
@@ -74,6 +74,21 @@ namespace CGCourseProject
             v_res.y = v1.y - v2.y;
             v_res.z = v1.z - v2.z;
             return v_res;
+        }
+
+        public void Normalize()
+        {
+            double scale = 1.0 / GetVectorLength();
+
+            x = x * scale;
+            y = y * scale;
+            z = z * scale;
+        }
+
+        public double GetVectorLength()
+        {
+            double len = Math.Sqrt(x * x + y * y + z * z);
+            return len;
         }
     }
 }
