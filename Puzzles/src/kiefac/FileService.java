@@ -7,7 +7,7 @@ public class FileService {
 
     public String chooseFileFromComputer(){
         JFileChooser jfc = new JFileChooser();
-        jfc.showDialog(null,"Start");
+        jfc.showDialog(null,"Select the file");
 
         fileName = jfc.getSelectedFile().getName();
         return fileName;

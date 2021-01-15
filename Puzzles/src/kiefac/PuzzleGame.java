@@ -10,6 +10,8 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
+enum State{MAIN, GAME}
+
 public class PuzzleGame extends Barista {
     private Picture mainPicture;
     private Picture fileSelectionPicture;
@@ -19,6 +21,16 @@ public class PuzzleGame extends Barista {
     private int pictureLocationOffsetY;
     private int fileSelectionPictureOffsetX;
     private int fileSelectionPictureOffsetY;
+    private int startButtonOffsetX;
+    private int startButtonOffsetY;
+    State state;
+
+    private boolean isMouseOnButton(int minX, int maxX, int minY, int maxY){
+        return getMouseX() >= minX &&
+                getMouseX() <= maxX &&
+                getMouseY() >= minY &&
+                getMouseY() <= maxY;
+    }
 
     private void drawPicture(Picture pictureObject, int offsetX, int offsetY) {
         var pictureData = pictureObject.getPictureData();
@@ -33,6 +45,7 @@ public class PuzzleGame extends Barista {
     public boolean onUserCreate() {
         gameName = "PuzzleGame";
 
+        state = State.MAIN;
         mainPicture = new Picture();
         fileSelectionPicture = new Picture("D:/Programming/lib/Puzzles/SelectFile.PNG");
         startGamePicture = new Picture("D:/Programming/lib/Puzzles/Start.PNG");
@@ -41,26 +54,37 @@ public class PuzzleGame extends Barista {
         pictureLocationOffsetY = 140;
         fileSelectionPictureOffsetX = screenWidth / 3 + 70;
         fileSelectionPictureOffsetY = 40;
-
+        startButtonOffsetX = fileSelectionPictureOffsetX + 20;
         return true;
     }
 
     @Override
     public boolean onUserUpdate(double frameTime) {
-        //fill(0, 0, screenWidth, screenHeight, Color.BLACK);
-        drawPicture(fileSelectionPicture, fileSelectionPictureOffsetX, fileSelectionPictureOffsetY);
 
-        if (getKey(KeyEvent.VK_F).pressed &&
-            getMouseX() >= fileSelectionPictureOffsetX &&
-            getMouseX() <= fileSelectionPictureOffsetX + fileSelectionPicture.getWidth() &&
-            getMouseY() >= fileSelectionPictureOffsetY &&
-            getMouseY() <= fileSelectionPictureOffsetY + fileSelectionPicture.getHeight())
-        {
-            mainPicture = new Picture(fileService.chooseFileFromComputer());
+        fill(0, 0, screenWidth, screenHeight, Color.BLACK);
+
+        if(state == State.MAIN) {
+            drawPicture(fileSelectionPicture, fileSelectionPictureOffsetX, fileSelectionPictureOffsetY);
+
+            if (getKey(KeyEvent.VK_F).pressed &&
+                isMouseOnButton(fileSelectionPictureOffsetX, fileSelectionPictureOffsetX + fileSelectionPicture.getWidth(),
+                fileSelectionPictureOffsetY, fileSelectionPictureOffsetY + fileSelectionPicture.getHeight())) {
+                mainPicture = new Picture(fileService.chooseFileFromComputer());
+            }
+
+            drawPicture(mainPicture, pictureLocationOffsetX, pictureLocationOffsetY);
+            startButtonOffsetY = pictureLocationOffsetY + mainPicture.getHeight() + 40;
+            drawPicture(startGamePicture, fileSelectionPictureOffsetX + 20, startButtonOffsetY);
+
+            if(getKey(KeyEvent.VK_F).pressed && isMouseOnButton(startButtonOffsetX,startButtonOffsetX + startGamePicture.getWidth(),
+                    startButtonOffsetY, startButtonOffsetY + startGamePicture.getHeight())) {
+                state = State.GAME;
+            }
+
+        } else {
+
         }
 
-        drawPicture(mainPicture, pictureLocationOffsetX, pictureLocationOffsetY);
-        drawPicture(startGamePicture, fileSelectionPictureOffsetX + 20, pictureLocationOffsetY + mainPicture.getHeight() + 40);
         return true;
     }
 
