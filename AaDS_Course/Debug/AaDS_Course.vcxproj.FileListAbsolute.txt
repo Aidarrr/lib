@@ -1,2 +1,0 @@
-D:\Programming\lib\AaDS_Course\Debug\AaDS_Course.exe
-D:\Programming\lib\AaDS_Course\Debug\AaDS_Course.pdb

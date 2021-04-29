@@ -1,6 +1,0 @@
-D:\Programming\db\ML\Lab2\Past\bin\Debug\Past.exe.config
-D:\Programming\db\ML\Lab2\Past\bin\Debug\Past.exe
-D:\Programming\db\ML\Lab2\Past\bin\Debug\Past.pdb
-D:\Programming\db\ML\Lab2\Past\obj\Debug\Past.csprojAssemblyReference.cache
-D:\Programming\db\ML\Lab2\Past\obj\Debug\Past.exe
-D:\Programming\db\ML\Lab2\Past\obj\Debug\Past.pdb

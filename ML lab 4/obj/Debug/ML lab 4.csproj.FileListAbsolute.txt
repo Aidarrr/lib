@@ -1,6 +1,0 @@
-E:\Programming\lib\ML lab 4\bin\Debug\ML lab 4.exe.config
-E:\Programming\lib\ML lab 4\bin\Debug\ML lab 4.exe
-E:\Programming\lib\ML lab 4\bin\Debug\ML lab 4.pdb
-E:\Programming\lib\ML lab 4\obj\Debug\ML lab 4.csprojAssemblyReference.cache
-E:\Programming\lib\ML lab 4\obj\Debug\ML lab 4.exe
-E:\Programming\lib\ML lab 4\obj\Debug\ML lab 4.pdb

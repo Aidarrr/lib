@@ -1,0 +1,10 @@
+D:\Programming\lib\SudokuSolver\bin\Debug\SudokuSolver.exe.config
+D:\Programming\lib\SudokuSolver\bin\Debug\SudokuSolver.exe
+D:\Programming\lib\SudokuSolver\bin\Debug\SudokuSolver.pdb
+D:\Programming\lib\SudokuSolver\obj\Debug\SudokuSolver.csprojAssemblyReference.cache
+D:\Programming\lib\SudokuSolver\obj\Debug\SudokuSolver.Form1.resources
+D:\Programming\lib\SudokuSolver\obj\Debug\SudokuSolver.Properties.Resources.resources
+D:\Programming\lib\SudokuSolver\obj\Debug\SudokuSolver.csproj.GenerateResource.cache
+D:\Programming\lib\SudokuSolver\obj\Debug\SudokuSolver.csproj.CoreCompileInputs.cache
+D:\Programming\lib\SudokuSolver\obj\Debug\SudokuSolver.exe
+D:\Programming\lib\SudokuSolver\obj\Debug\SudokuSolver.pdb
