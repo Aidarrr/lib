@@ -11,18 +11,59 @@ namespace SudokuSolver
     {
         private int size = 9;
         private int boxSize = 3;
+        private int iterationsCount, backtrackingCount, emptyCells;
         public Cell[,] cells;
 
         public GameBoard()
         {
+            iterationsCount = 0;
+            backtrackingCount = 0;
+            emptyCells = size * size;
+
             cells = new Cell[size, size];
             for (int i = 0; i < size; i++)
             {
                 for (int j = 0; j < size; j++)
                 {
-                    cells[i, j] = new Cell(i, j);
+                    cells[i, j] = new Cell(j, i);
                 }
             }
+        }
+
+        public int getEmptyCells()
+        {
+            return emptyCells;
+        }
+
+        public int getIterationsCount()
+        {
+            return iterationsCount;
+        }
+
+        public int getBacktrackingCount()
+        {
+            return backtrackingCount;
+        }
+
+        public void resetCountValues()
+        {
+            iterationsCount = 0;
+            backtrackingCount = 0;
+        }
+
+        private int calcEmptyCells()
+        {
+            int emptyCellsCount = 0;
+
+            foreach (var cell in cells)
+            {
+                if(cell.Value == Cell.unassigned)
+                {
+                    emptyCellsCount++;        
+                }
+            }
+
+            return emptyCellsCount;
         }
 
         public void loadSudokuFromFile(String fileName)
@@ -45,6 +86,8 @@ namespace SudokuSolver
                     }
                 }
             }
+
+            emptyCells = calcEmptyCells();
         }
 
         private bool FindUnassignedLocation(Cell[,] grid, ref int row, ref int col)
@@ -112,9 +155,12 @@ namespace SudokuSolver
                     if (solveSudoku())
                         return true;
 
+                    backtrackingCount++;
                     cells[row, col].Value = Cell.unassigned;
                     cells[row, col].Text = String.Empty;
                 }
+
+                iterationsCount++;
             }
 
             return false;
