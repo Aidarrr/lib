@@ -38,7 +38,6 @@ class Perceptrons {
     private Individual[][] weights;
     private double[][] correctWeights;
     private int[] output;
-    private int era, totalError;    //Суммарная ошибка
     private int[][] targets;        //Таблица c ожидаемыми значениями
     ArrayList<Individual> nextPopulation;
 
@@ -53,8 +52,6 @@ class Perceptrons {
             Arrays.fill(targets[i], 0);
             targets[i][i] = 1;
         }
-        era = 0;
-        totalError = 1;
         nextPopulation = new ArrayList<>();
     }
 
@@ -81,14 +78,6 @@ class Perceptrons {
             }
         }
         return output > 0 ? 1 : 0;
-    }
-
-    private void adjustWeights(int[] weights, int speed, int target, int output, int[][] input) {       //Корректировка весов
-        for (int i = 0; i < input.length; i++) {
-            for (int j = 0; j < input[i].length; j++) {
-                weights[i * input.length + j] = weights[i * input.length + j] + speed * (target - output) * input[i][j];
-            }
-        }
     }
 
     private void copyCorrectWeights(int neuronNumber, double[] individualWeights) {
@@ -160,17 +149,17 @@ class Perceptrons {
 
     private void mutate(Individual[] individuals) {
         int weightsArrayLength = individuals[0].individualWeights.length;
-        int errorBorder = 3;
+        int errorBorder = 2;
         Random random = new Random();
 
         for (int individual = 0; individual < individuals.length; individual++) {
             if (individuals[individual].error >= errorBorder) {
                 double[] mutatedIndividual = Arrays.copyOf(individuals[individual].individualWeights, weightsArrayLength);
-                int iterations = errorBorder;
+                int iterations = errorBorder * 6;
 
                 for (int i = 0; i < iterations; i++) {
                     int randIndex = random.nextInt(weightsArrayLength);
-                    mutatedIndividual[randIndex] = random.nextDouble() * 10 - 5;
+                    mutatedIndividual[randIndex] = random.nextDouble() * 40 - 20;
                 }
                 nextPopulation.add(new Individual(mutatedIndividual));
             }
@@ -181,7 +170,7 @@ class Perceptrons {
         Individual[] chosenIndividuals = new Individual[Individual.individualCount];
         int i = 0, j = 0, k = 0;
 
-        while (i < currentPopulation.length && j < nextPopulation.size() && k < chosenIndividuals.length) {
+        while (i < currentPopulation.length && j < nextPopulation.size() && k < chosenIndividuals.length / 2) {
             if (currentPopulation[i].error < nextPopulation.get(j).error) {
                 chosenIndividuals[k] = currentPopulation[i];
                 i++;
@@ -193,10 +182,22 @@ class Perceptrons {
             }
         }
 
+        if(j < nextPopulation.size()){
+            int prevJ = j;
+            j = nextPopulation.size() - 1;
+            while(j >= prevJ && k < chosenIndividuals.length){
+                chosenIndividuals[k] = nextPopulation.get(j);
+                j--;
+                k++;
+            }
+        }
+
         if(k != chosenIndividuals.length){
-            while(i < currentPopulation.length && k < chosenIndividuals.length){
+            int prevI = i;
+            i = currentPopulation.length - 1;
+            while(i >= prevI && k < chosenIndividuals.length){
                 chosenIndividuals[k] = currentPopulation[i];
-                i++;
+                i--;
                 k++;
             }
         }
