@@ -55,7 +55,7 @@ namespace SudokuSolver
         {
             var fileDialog = new OpenFileDialog
             {
-                Title = "Open Sudoku Puzzle",
+                Title = "Открыть Судоку",
                 Filter = "TXT files|*.txt",
                 InitialDirectory = Path.GetFullPath(Directory.GetCurrentDirectory() + "\\..\\Puzzles")
             };
@@ -71,6 +71,33 @@ namespace SudokuSolver
             iterationsCount.Text = gameBoard.getIterationsCount().ToString();
 
             resetCellsColor();
+            gameBoard.cells[0, 1].ForeColor = Color.White;
+            gameBoard.cells[0, 1].BackColor = Color.Gray;
+            gameBoard.cells[0, 1].Text = "1";
+            gameBoard.cells[0, 2].ForeColor = Color.White;
+            gameBoard.cells[0, 2].BackColor = Color.Gray;
+            gameBoard.cells[0, 2].Text = "4";
+            gameBoard.cells[0, 3].ForeColor = Color.White;
+            gameBoard.cells[0, 3].BackColor = Color.Gray;
+            gameBoard.cells[0, 3].Text = "6";
+            gameBoard.cells[0, 6].ForeColor = Color.White;
+            gameBoard.cells[0, 6].BackColor = Color.Gray;
+            gameBoard.cells[0, 6].Text = "7";
+            gameBoard.cells[0, 7].ForeColor = Color.White;
+            gameBoard.cells[0, 7].BackColor = Color.Gray;
+            gameBoard.cells[0, 7].Text = "2";
+            gameBoard.cells[1, 1].ForeColor = Color.White;
+            gameBoard.cells[1, 1].BackColor = Color.Gray;
+            gameBoard.cells[1, 1].Text = "9";
+            gameBoard.cells[1, 2].ForeColor = Color.White;
+            gameBoard.cells[1, 2].BackColor = Color.Gray;
+            gameBoard.cells[1, 2].Text = "5";
+            gameBoard.cells[1, 3].ForeColor = Color.White;
+            gameBoard.cells[1, 3].BackColor = Color.Gray;
+            gameBoard.cells[1, 3].Text = "1";
+            gameBoard.cells[1, 5].ForeColor = Color.White;
+            gameBoard.cells[1, 5].BackColor = Color.Gray;
+            gameBoard.cells[1, 5].Text = "7";
         }
 
         public void resetCellsColor()

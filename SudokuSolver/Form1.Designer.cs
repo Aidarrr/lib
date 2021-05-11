@@ -55,7 +55,7 @@ namespace SudokuSolver
             this.btnOpenFile.Name = "btnOpenFile";
             this.btnOpenFile.Size = new System.Drawing.Size(110, 34);
             this.btnOpenFile.TabIndex = 1;
-            this.btnOpenFile.Text = "Open Sudoku";
+            this.btnOpenFile.Text = "Открыть Судоку";
             this.btnOpenFile.UseVisualStyleBackColor = true;
             this.btnOpenFile.Click += new System.EventHandler(this.btnOpenFile_Click);
             // 
@@ -65,7 +65,7 @@ namespace SudokuSolver
             this.btnSolve.Name = "btnSolve";
             this.btnSolve.Size = new System.Drawing.Size(110, 34);
             this.btnSolve.TabIndex = 2;
-            this.btnSolve.Text = "Solve puzzle";
+            this.btnSolve.Text = "Решить Судоку";
             this.btnSolve.UseVisualStyleBackColor = true;
             this.btnSolve.Click += new System.EventHandler(this.btnSolve_Click);
             // 
@@ -75,7 +75,7 @@ namespace SudokuSolver
             this.btnCheck.Name = "btnCheck";
             this.btnCheck.Size = new System.Drawing.Size(110, 34);
             this.btnCheck.TabIndex = 3;
-            this.btnCheck.Text = "Check Solution";
+            this.btnCheck.Text = "Проверить решение";
             this.btnCheck.UseVisualStyleBackColor = true;
             this.btnCheck.Click += new System.EventHandler(this.btnCheck_Click);
             // 

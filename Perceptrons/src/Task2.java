@@ -34,6 +34,7 @@ class Individual {       //Особь
 
 class Perceptrons {
     static int lettersCount = 5;
+    public int trainIterationsCount = 0;
     private ArrayList<Letter> letters;
     private Individual[][] weights;
     private double[][] correctWeights;
@@ -219,6 +220,7 @@ class Perceptrons {
                 weights[neuron] = substitute(weights[neuron]);
 
                 nextPopulation.clear();
+                trainIterationsCount++;
             }
         }
 
@@ -296,7 +298,8 @@ public class Task2 {
 
         Perceptrons perceptrons = new Perceptrons(letters);
         perceptrons.train();                                        //Обучение сети
-
+        System.out.println("Количество итераций обучения " + perceptrons.trainIterationsCount);
+        System.out.println();
         for (int i = 0; i < Perceptrons.lettersCount; i++) {        //Получение результатов обработки каждой буквы
             System.out.println("Вектор выходов сети для буквы " + letters.get(i).letterChar + ":");
             var outputArray = perceptrons.getOutput(letters.get(i).getLetter());
