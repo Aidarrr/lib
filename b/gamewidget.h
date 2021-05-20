@@ -33,11 +33,13 @@ private:
   QTableWidget ai_table;    //Таблица ходов компьютера
   QString computerNumber;
   QString personNumber;
-  QLabel labelPersonNumber;
+  QString partlyOpenedCompNumber;
+  QLabel labelCompNumber;
   int numberLength = 4;
   bool personWon;
   bool computerWon;
   bool compFirstMove;
+  bool isLowDifficult;
   int maxCompArraySize = 9000;
   QVector<QString> compGuesses; //Массив возможных ответов компьютера
   QVector<bool> compMarkedGuesses;

@@ -2,6 +2,7 @@
 #include <QGridLayout>
 #include <QHeaderView>
 #include <QInputDialog>
+#include <QMessageBox>
 
 GameWidget::GameWidget(QWidget *parent)
   : QWidget(parent),
@@ -23,7 +24,8 @@ GameWidget::GameWidget(QWidget *parent)
   this->setLayout(layout);
 
   auto startButton = new QPushButton("Новая игра", this);
-  labelPersonNumber.setText("****");
+  labelCompNumber.setText("****");
+  partlyOpenedCompNumber = "****";
 
   numberInput.setValidator(new QIntValidator(this));
 
@@ -37,7 +39,7 @@ GameWidget::GameWidget(QWidget *parent)
 
   layout->addWidget(startButton, 0, 0);
   layout->addWidget(&statusMessage, 0, 1);
-  layout->addWidget(&labelPersonNumber, 0, 2);
+  layout->addWidget(&labelCompNumber, 0, 2);
 
   layout->addWidget(new QLabel("Введите число", this), 1, 0);
   layout->addWidget(&numberInput, 1, 1);
@@ -58,6 +60,18 @@ GameWidget::GameWidget(QWidget *parent)
 }
 
 void GameWidget::gameStart() {
+    QMessageBox chosingDifficulty;
+    QAbstractButton* lowDifficulty = chosingDifficulty.addButton(tr("Низкий"), QMessageBox::YesRole);
+    chosingDifficulty.addButton(tr("Высокий"), QMessageBox::NoRole);
+    chosingDifficulty.setText(tr("Выберите уровень сложности игры"));
+    chosingDifficulty.setWindowTitle("Сложность игры");
+    chosingDifficulty.exec();
+    if (chosingDifficulty.clickedButton() == lowDifficulty) {
+        isLowDifficult = 1;
+    } else {
+        isLowDifficult = 0;
+    }
+
     statusMessage.setText("Загадайте число");
     numberInput.setEnabled(true);
     readNumButton.setEnabled(true);
@@ -66,7 +80,8 @@ void GameWidget::gameStart() {
     checkButton.setVisible(false);
     table.setEnabled(true);
     ai_table.setEnabled(true);
-    labelPersonNumber.setText("****");
+    labelCompNumber.setText("****");
+    partlyOpenedCompNumber = "****";
 
     computerWon = false;
     personWon = false;
@@ -112,7 +127,6 @@ void GameWidget::readPersonNumber(){
         readNumButton.setVisible(false);
         checkButton.setVisible(true);
         checkButton.setEnabled(true);
-        labelPersonNumber.setText(personNumber);
     } else {
         statusMessage.setText("Некорректное число");
     }
@@ -182,6 +196,10 @@ void GameWidget::makeMove() {
     table.setItem(table.rowCount()-1, 0, new QTableWidgetItem(sValue));
     table.setItem(table.rowCount()-1, 1, new QTableWidgetItem(QString::number(nBulls)));
     table.setItem(table.rowCount()-1, 2, new QTableWidgetItem(QString::number(nCows)));
+
+    if(isLowDifficult){
+        labelCompNumber.setText(partlyOpenedCompNumber);
+    }
 
     if(sValue != computerNumber){
         computerMove();
@@ -253,7 +271,9 @@ void GameWidget::computerMove(){
     }
 
     int nBulls = 0, nCows = 0;
-    calcBullsAndCows(sValue, personNumber, nCows, nBulls);
+
+    nBulls = QInputDialog::getText(this, tr("Число быков"), "Комьютер ввел число " + sValue + ". Число быков:",  QLineEdit::Normal).toInt();
+    nCows = QInputDialog::getText(this, tr("Число коров"), "Комьютер ввел число " + sValue + ". Число коров:",  QLineEdit::Normal).toInt();
 
     ai_table.insertRow(ai_table.rowCount());
     ai_table.setItem(ai_table.rowCount()-1, 0, new QTableWidgetItem(sValue));
@@ -272,9 +292,10 @@ void GameWidget::computerMove(){
     }
 }
 
-void GameWidget::calcBullsAndCows(QString input, QString original, int& nCows, int& nBulls) {
+void GameWidget::calcBullsAndCows(QString input, QString original, int& nCows, int& nBulls) { 
     for (int i = 0; i < input.size(); ++i) {
         if (input[i] == original[i]) {
+          partlyOpenedCompNumber[i] = input[i];
           nBulls++;
           input[i] = ' ';
         }
