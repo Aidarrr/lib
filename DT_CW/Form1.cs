@@ -15,6 +15,8 @@ namespace DT_CW
         public Form1()
         {
             InitializeComponent();
+            FileReader fr = new FileReader();
+            fr.readInputData("input.txt");
         }
     }
 }
