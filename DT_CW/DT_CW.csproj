@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CoefficientContainer.cs" />
     <Compile Include="DependencyElement.cs" />
     <Compile Include="FileReader.cs" />
     <Compile Include="Form1.cs">

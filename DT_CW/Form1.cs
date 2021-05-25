@@ -15,8 +15,16 @@ namespace DT_CW
         public Form1()
         {
             InitializeComponent();
-            FileReader fr = new FileReader();
-            fr.readInputData("input.txt");
+
+            CoefficientContainer container = new CoefficientContainer();
+            container.calculateCoefficients();
+
+            //FileReader fr = new FileReader();
+            //fr.readInputData("input.txt");
+            //IntegralValues integralValues = new IntegralValues();
+            //DependencyElement dependencyElement = new DependencyElement(fr.getDataFromFile(), 0, 3);
+            //dependencyElement.calculateCoefficientTableData(integralValues);
+            //dependencyElement.calculateCoefficient();
         }
     }
 }

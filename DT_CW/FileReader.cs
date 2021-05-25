@@ -13,6 +13,11 @@ namespace DT_CW
                                            "Сдельная зарплата", "Несдельная зарплата", "Налоги", "Инвестиции в основные средства" };
         List<Tuple<string, double>> dataFromFile;
 
+        public List<Tuple<string, double>> getDataFromFile()
+        {
+            return dataFromFile;
+        }
+
         public void readInputData(string fileName)
         {
             string[] lines = System.IO.File.ReadAllLines(fileName);
