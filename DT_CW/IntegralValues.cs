@@ -11,6 +11,11 @@ namespace DT_CW
         private int amountOfMonths = 18;
         private string[] integralVarNames = new string[] { "NPV", "PI", "MinCash" };
 
+        public string getVarName(int integralVarNumber)
+        {
+            return integralVarNames[integralVarNumber];
+        }
+
         public void calculateIntegralValue(int integralVarNumber, int indepVarNumber, List<Tuple<double, double>> tableForCoefficient, List<Tuple<string, double>> dataFromFile)
         {
             if(integralVarNumber == 0)

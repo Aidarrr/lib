@@ -12,9 +12,8 @@ namespace DT_CW
         private List<Tuple<double, double>> tableForCoefficientCalculation; 
         private List<Tuple<string, double>> dataFromFile;
         private double elasticityCoefficient;
-        private Tuple<string, string> dependentAndIndependent;
+        private Tuple<string, string> dependentAndIndependentNames;
         private int dependentVariableNumber, independentVariableNumber;
-        
 
         public DependencyElement(List<Tuple<string, double>> dataFromFile, int depVar, int indepVar)
         {
@@ -26,15 +25,33 @@ namespace DT_CW
             independentVariableNumber = indepVar;
         }
 
+        public double getCoefficient()
+        {
+            return elasticityCoefficient;
+        }
+
+        public Tuple<string, string> getNamesOfDependency()
+        {
+            return dependentAndIndependentNames;
+        }
+
         public Tuple<double, double> getMinAndMax()
         {
             if (independentVariableNumber == 0)
             {
                 return new Tuple<double, double>(870000, 12000000);
             } 
-            else if (independentVariableNumber == 1)
+            else if (independentVariableNumber == 1 || independentVariableNumber == 2)
             {
                 return new Tuple<double, double>(400000, 6000000);
+            } 
+            else if (independentVariableNumber == 5)
+            {
+                return new Tuple<double, double>(dataFromFile[0].Item2 * 0.1, dataFromFile[0].Item2 * 0.5);
+            }
+            else if (independentVariableNumber == 6)
+            {
+                return new Tuple<double, double>(500000, 3000000);
             }
 
             return new Tuple<double, double>(10000, 200000);
@@ -62,6 +79,14 @@ namespace DT_CW
             double deltaIndepVar = (tableForCoefficientCalculation[sizeOfDataTable - 1].Item1 - tableForCoefficientCalculation[sizeOfDataTable - 2].Item1) / maxIndepValue;
 
             elasticityCoefficient = deltaIntegralVar / deltaIndepVar;
+        }
+
+        public void setNameOfDependentAndIndepVariables(IntegralValues integralValues)
+        {
+            string depName = integralValues.getVarName(dependentVariableNumber);
+            string indepName = dataFromFile[independentVariableNumber].Item1;
+
+            dependentAndIndependentNames = new Tuple<string, string>(depName, indepName);
         }
     }
 }

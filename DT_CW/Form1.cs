@@ -18,6 +18,7 @@ namespace DT_CW
 
             CoefficientContainer container = new CoefficientContainer();
             container.calculateCoefficients();
+            container.fillListOfCoefficients();
 
             //FileReader fr = new FileReader();
             //fr.readInputData("input.txt");
