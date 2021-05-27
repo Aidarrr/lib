@@ -1,0 +1,12 @@
+D:\Programming\vslibrary\graphTest\ConjTable\bin\Debug\ConjTable.dll
+D:\Programming\vslibrary\graphTest\ConjTable\bin\Debug\ConjTable.pdb
+D:\Programming\vslibrary\graphTest\ConjTable\obj\Debug\ConjTable.csprojAssemblyReference.cache
+D:\Programming\vslibrary\graphTest\ConjTable\obj\Debug\ConjTable.csproj.CoreCompileInputs.cache
+D:\Programming\vslibrary\graphTest\ConjTable\obj\Debug\ConjTable.dll
+D:\Programming\vslibrary\graphTest\ConjTable\obj\Debug\ConjTable.pdb
+D:\Programming\lib\graphVisualization\ConjTable\bin\Debug\ConjTable.dll
+D:\Programming\lib\graphVisualization\ConjTable\bin\Debug\ConjTable.pdb
+D:\Programming\lib\graphVisualization\ConjTable\obj\Debug\ConjTable.csprojAssemblyReference.cache
+D:\Programming\lib\graphVisualization\ConjTable\obj\Debug\ConjTable.csproj.CoreCompileInputs.cache
+D:\Programming\lib\graphVisualization\ConjTable\obj\Debug\ConjTable.dll
+D:\Programming\lib\graphVisualization\ConjTable\obj\Debug\ConjTable.pdb
