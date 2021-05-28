@@ -60,15 +60,24 @@ namespace System.Windows.Forms
         //Первичная расстановка вершин в вершинах многоугольника
         private void ArrangeNodes()
         {
-            int i = 0;
-            var r = Math.Min(ClientRectangle.Width, ClientRectangle.Height) * 0.9 / 2f;
-            int count = _nodes.Count;
-            foreach (var node in _nodes.Cast<Node>())
+            //int i = 0;
+            //var r = Math.Min(ClientRectangle.Width, ClientRectangle.Height) * 0.9 / 2f;
+            //int count = _nodes.Count;
+            //foreach (var node in _nodes.Cast<Node>())
+            //{
+            //    var x = r * Math.Cos(2 * Math.PI * i / count);
+            //    var y = r * Math.Sin(2 * Math.PI * i / count);
+            //    node.Location = new PointF((float)x, (float)y);
+            //    i++;
+            //}
+
+            float yForMostVertexes = 80, xStart = -800;
+
+            _nodes[0].Location = new PointF(xStart + (_nodes.Count / 2 + 2) * _nodes[0].Radius * 2, -400);
+
+            for (int j = 1; j < _nodes.Count; j++)
             {
-                var x = r * Math.Cos(2 * Math.PI * i / count);
-                var y = r * Math.Sin(2 * Math.PI * i / count);
-                node.Location = new PointF((float)x, (float)y);
-                i++;
+                _nodes[j].Location = new PointF(xStart + 2 * _nodes[j].Radius * j + 50, yForMostVertexes);
             }
         }
 

@@ -7,7 +7,7 @@ namespace System.Windows.Forms
     {
         public List<Node> Linked { get; set; } = new List<Node>();
         public string Label;
-        public float Radius = 70f;
+        public float Radius = 84f;
         public PointF Location;
 
         public void Drag(PointF offset)
@@ -33,7 +33,7 @@ namespace System.Windows.Forms
             gr.DrawCircle(Radius, Pens.Black);
             if (!string.IsNullOrEmpty(Label))
             {
-                gr.DrawCenteredString(Label, SystemFonts.CaptionFont, SystemBrushes.ControlDarkDark, Radius);
+                gr.DrawCenteredString(Label, new Font("Microsoft Sans Serif", 12), Brushes.Black, Radius);
             }
             gr.Restore(state);
         }

@@ -50,9 +50,10 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.AutoScroll = true;
             this.splitContainer1.Panel2.Controls.Add(this.conjPanel1);
-            this.splitContainer1.Size = new System.Drawing.Size(760, 535);
-            this.splitContainer1.SplitterDistance = 252;
+            this.splitContainer1.Size = new System.Drawing.Size(998, 616);
+            this.splitContainer1.SplitterDistance = 286;
             this.splitContainer1.TabIndex = 3;
             // 
             // conjTable1
@@ -66,7 +67,7 @@
             this.conjTable1.Location = new System.Drawing.Point(0, 0);
             this.conjTable1.Name = "conjTable1";
             this.conjTable1.RowHeadersVisible = false;
-            this.conjTable1.Size = new System.Drawing.Size(252, 273);
+            this.conjTable1.Size = new System.Drawing.Size(286, 273);
             this.conjTable1.TabIndex = 1;
             this.conjTable1.VirtualMode = true;
             this.conjTable1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.conjTable1_CellValueChanged);
@@ -76,19 +77,21 @@
             this.conjPanel1.AutoScroll = true;
             this.conjPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.conjPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.conjPanel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.conjPanel1.Location = new System.Drawing.Point(0, 0);
             this.conjPanel1.Name = "conjPanel1";
-            this.conjPanel1.Size = new System.Drawing.Size(504, 535);
+            this.conjPanel1.Size = new System.Drawing.Size(708, 616);
             this.conjPanel1.TabIndex = 0;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(760, 535);
+            this.ClientSize = new System.Drawing.Size(998, 616);
             this.Controls.Add(this.splitContainer1);
             this.Name = "MainForm";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();

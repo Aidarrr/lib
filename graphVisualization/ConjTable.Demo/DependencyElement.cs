@@ -75,8 +75,8 @@ namespace DT_CW
             double maxIntegralValue = tableForCoefficientCalculation.Max(x => x.Item2);
             double maxIndepValue = tableForCoefficientCalculation.Max(x => x.Item1);
 
-            double deltaIntegralVar = (tableForCoefficientCalculation[sizeOfDataTable - 1].Item2 - tableForCoefficientCalculation[sizeOfDataTable - 2].Item2) / maxIntegralValue;
-            double deltaIndepVar = (tableForCoefficientCalculation[sizeOfDataTable - 1].Item1 - tableForCoefficientCalculation[sizeOfDataTable - 2].Item1) / maxIndepValue;
+            double deltaIntegralVar = (tableForCoefficientCalculation[sizeOfDataTable - 1].Item2 - tableForCoefficientCalculation[0].Item2) / tableForCoefficientCalculation[0].Item2;
+            double deltaIndepVar = (tableForCoefficientCalculation[sizeOfDataTable - 1].Item1 - tableForCoefficientCalculation[0].Item1) / tableForCoefficientCalculation[0].Item1;
 
             elasticityCoefficient = deltaIntegralVar / deltaIndepVar;
         }

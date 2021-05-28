@@ -39,6 +39,7 @@ namespace ConjTable.Demo
             base.OnLoad(e);
             conjTable1.Build(_matrix);
             conjPanel1.Build(_matrix, container.getCoefficients());
+            
         }
 
         private void updateButton_Click(object sender, EventArgs e)
@@ -49,6 +50,11 @@ namespace ConjTable.Demo
         private void conjTable1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             conjPanel1.Build(conjTable1.Matrix, container.getCoefficients());
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
