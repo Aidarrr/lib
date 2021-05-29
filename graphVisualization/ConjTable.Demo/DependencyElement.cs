@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DT_CW
 {
-    class DependencyElement
+    public class DependencyElement
     {
         static int sizeOfDataTable = 10;
         private List<Tuple<double, double>> tableForCoefficientCalculation; 
@@ -23,6 +23,11 @@ namespace DT_CW
             elasticityCoefficient = 0;
             dependentVariableNumber = depVar;
             independentVariableNumber = indepVar;
+        }
+
+        public List<Tuple<double, double>> getTableForCoefficientCalculation()
+        {
+            return tableForCoefficientCalculation;
         }
 
         public double getCoefficient()

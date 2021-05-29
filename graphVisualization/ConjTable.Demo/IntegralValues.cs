@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DT_CW
 {
-    class IntegralValues
+    public class IntegralValues
     {
         private int amountOfMonths = 18;
         private string[] integralVarNames = new string[] { "NPV", "PI", "MinCash" };

@@ -1,6 +1,10 @@
 ﻿using DT_CW;
 using System;
+using System.Data;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace ConjTable.Demo
 {
@@ -55,6 +59,27 @@ namespace ConjTable.Demo
         private void MainForm_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void сохранитьСхемуToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int width = conjPanel1.Size.Width;
+            int height = conjPanel1.Size.Height;
+
+            Bitmap bm = new Bitmap(width, height);
+            conjPanel1.DrawToBitmap(bm, new Rectangle(0, 0, width, height));
+            bm.Save(@"TestDrawToBitmap.bmp", ImageFormat.Bmp);
+        }
+
+        private void chart1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void показатьГрафикиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormPlots formPlots = new FormPlots(container);
+            formPlots.Show();
         }
     }
 }

@@ -24,3 +24,4 @@ D:\Programming\lib\graphVisualization\ConjTable.Demo\obj\Debug\ConjTable.Demo.cs
 D:\Programming\lib\graphVisualization\ConjTable.Demo\obj\Debug\ConjTable.Demo.csproj.CopyComplete
 D:\Programming\lib\graphVisualization\ConjTable.Demo\obj\Debug\ConjTable.Demo.exe
 D:\Programming\lib\graphVisualization\ConjTable.Demo\obj\Debug\ConjTable.Demo.pdb
+D:\Programming\lib\graphVisualization\ConjTable.Demo\obj\Debug\ConjTable.Demo.FormPlots.resources

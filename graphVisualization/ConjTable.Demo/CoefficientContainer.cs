@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DT_CW
 {
-    class CoefficientContainer
+    public class CoefficientContainer
     {
         private List<Tuple<string, double>> coefficients;
         private List<DependencyElement> dependencyElements;
@@ -30,6 +30,11 @@ namespace DT_CW
         public List<Tuple<string, double>> getCoefficients()
         {
             return coefficients;
+        }
+
+        public List<DependencyElement> getDependencyElements()
+        {
+            return dependencyElements;
         }
 
         public void calculateCoefficients()

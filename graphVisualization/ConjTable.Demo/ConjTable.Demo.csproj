@@ -43,6 +43,12 @@
     <Compile Include="CoefficientContainer.cs" />
     <Compile Include="DependencyElement.cs" />
     <Compile Include="FileReader.cs" />
+    <Compile Include="FormPlots.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPlots.Designer.cs">
+      <DependentUpon>FormPlots.cs</DependentUpon>
+    </Compile>
     <Compile Include="IntegralValues.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -52,6 +58,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FormPlots.resx">
+      <DependentUpon>FormPlots.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>

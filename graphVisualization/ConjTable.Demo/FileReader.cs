@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DT_CW
 {
-    class FileReader
+    public class FileReader
     {
         string[] rowNames = new string[] { "Поступления от продаж", "Прямые издержки", "Условно-постоянные издержки", 
                                            "Сдельная зарплата", "Несдельная зарплата", "Налоги", "Инвестиции в основные средства" };
