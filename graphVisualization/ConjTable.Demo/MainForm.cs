@@ -68,7 +68,13 @@ namespace ConjTable.Demo
 
             Bitmap bm = new Bitmap(width, height);
             conjPanel1.DrawToBitmap(bm, new Rectangle(0, 0, width, height));
-            bm.Save(@"TestDrawToBitmap.bmp", ImageFormat.Bmp);
+
+            SaveFileDialog sf = new SaveFileDialog();
+            sf.Filter = "Bitmap Image (.bmp)|*.bmp|Gif Image (.gif)|*.gif|JPEG Image (.jpeg)|*.jpeg|Png Image (.png)|*.png|Tiff Image (.tiff)|*.tiff|Wmf Image (.wmf)|*.wmf";
+            sf.ShowDialog();
+            var path = sf.FileName;
+            if(path != String.Empty)
+                bm.Save(path);
         }
 
         private void chart1_Click(object sender, EventArgs e)

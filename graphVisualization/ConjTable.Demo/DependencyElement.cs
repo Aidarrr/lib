@@ -79,9 +79,35 @@ namespace DT_CW
         {
             double maxIntegralValue = tableForCoefficientCalculation.Max(x => x.Item2);
             double maxIndepValue = tableForCoefficientCalculation.Max(x => x.Item1);
+            double minIndepValue = tableForCoefficientCalculation.Min(x => x.Item1);
+            int maxIndepIndex = 0, minIndepIndex = 0;
 
-            double deltaIntegralVar = (tableForCoefficientCalculation[sizeOfDataTable - 1].Item2 - tableForCoefficientCalculation[0].Item2) / tableForCoefficientCalculation[0].Item2;
-            double deltaIndepVar = (tableForCoefficientCalculation[sizeOfDataTable - 1].Item1 - tableForCoefficientCalculation[0].Item1) / tableForCoefficientCalculation[0].Item1;
+            for (int i = 0; i < tableForCoefficientCalculation.Count; i++)
+            {
+                if(maxIndepValue == tableForCoefficientCalculation[i].Item1)
+                {
+                    maxIndepIndex = i;
+                    break;
+                }
+            }
+
+            for (int i = 0; i < tableForCoefficientCalculation.Count; i++)
+            {
+                if (minIndepValue == tableForCoefficientCalculation[i].Item1)
+                {
+                    minIndepIndex = i;
+                    break;
+                }
+            }
+
+            //double deltaIntegralVar = (tableForCoefficientCalculation[maxIndepIndex].Item2 - tableForCoefficientCalculation[minIndepIndex].Item2) / tableForCoefficientCalculation[maxIndepIndex].Item2;
+            //double deltaIndepVar = (maxIndepValue - minIndepValue) / minIndepValue;
+
+            //double deltaIntegralVar = (tableForCoefficientCalculation[sizeOfDataTable - 1].Item2 - tableForCoefficientCalculation[0].Item2) / tableForCoefficientCalculation[0].Item2;
+            //double deltaIndepVar = (tableForCoefficientCalculation[sizeOfDataTable - 1].Item1 - tableForCoefficientCalculation[0].Item1) / tableForCoefficientCalculation[0].Item1;
+
+            double deltaIntegralVar = (tableForCoefficientCalculation[sizeOfDataTable - 1].Item2 - tableForCoefficientCalculation[sizeOfDataTable - 2].Item2) / maxIntegralValue;
+            double deltaIndepVar = (tableForCoefficientCalculation[sizeOfDataTable - 1].Item1 - tableForCoefficientCalculation[sizeOfDataTable - 2].Item1) / maxIndepValue;
 
             elasticityCoefficient = deltaIntegralVar / deltaIndepVar;
         }
