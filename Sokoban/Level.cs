@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Sokoban
 {
-    class Level
+    public class Level
     {
         private char[,] map;
         public char keeperSym = '@', emptySym = ' ', boxSym = '*', goalSym = '.', setBox = 's', wallSym = 'X';

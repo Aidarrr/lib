@@ -18,24 +18,36 @@ namespace Sokoban
         Level level;
         Game game;
         ImageContainer imageContainer;
+        Menu menu;
+
         Color bgColor = Color.White;
         int offset = 30, sx = 100, sy = 100;
+        int levelCount = 0;
 
-        public Form1()
+        public Form1(int levelNum = 1)
         {
             InitializeComponent();
             fileReader = new FileReader();
-            fileReader.readMap(2);
+            fileReader.readMap(levelNum);
+            levelCount = fileReader.getLevelsCount();
 
             level = fileReader.getLevelObject();
             game = new Game(level);
             imageContainer = new ImageContainer();
+            menu = new Menu();
 
             bitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             graphics = Graphics.FromImage(bitmap);
         }
 
-        private void drawMap()
+        public void setAnotherLevel()
+        {
+            level = fileReader.getLevelObject();
+            game = new Game(level);
+            drawMap();
+        }
+
+        public void drawMap()
         {
             char[,] map = level.getMap();
             sx = (bitmap.Width - map.GetLength(0) * offset) / 2;
@@ -63,6 +75,13 @@ namespace Sokoban
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
             
+        }
+
+        private void chooseLevel_Click(object sender, EventArgs e)
+        {
+            LevelBoard levelBoard = menu.createLevelBoard(levelCount);
+            LevelForm levelForm = new LevelForm(levelBoard, levelCount, this, fileReader);
+            levelForm.Show();
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)

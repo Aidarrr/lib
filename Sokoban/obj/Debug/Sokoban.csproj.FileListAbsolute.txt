@@ -8,3 +8,4 @@ D:\Programming\lib\Sokoban\obj\Debug\Sokoban.csproj.GenerateResource.cache
 D:\Programming\lib\Sokoban\obj\Debug\Sokoban.csproj.CoreCompileInputs.cache
 D:\Programming\lib\Sokoban\obj\Debug\Sokoban.exe
 D:\Programming\lib\Sokoban\obj\Debug\Sokoban.pdb
+D:\Programming\lib\Sokoban\obj\Debug\Sokoban.LevelForm.resources
