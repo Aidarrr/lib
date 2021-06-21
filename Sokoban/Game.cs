@@ -12,21 +12,25 @@ namespace Sokoban
         private Level currentLevel;
         private char[,] map;
         private Point keeperPosition;
+        private List<Tuple<char[,], Point>> previousSteps;
         int cntBoxesOnLocation = 0;
-        int movesCount = 0;
+        public int movesCount = 0;
 
         public Game(Level currentLevel)
         {
             this.currentLevel = currentLevel;
             map = currentLevel.getMap();
             keeperPosition = currentLevel.keeperPosition;
+            previousSteps = new List<Tuple<char[,], Point>>();
         }
 
         public void move(int deltaX, int deltaY)
         {
             Point newPosition = new Point(keeperPosition.X + deltaX, keeperPosition.Y + deltaY);
+            char[,] previousStep = new char[map.GetLength(0), map.GetLength(1)];
+            Array.Copy(map, previousStep, map.GetLength(0) * map.GetLength(1));
 
-            if(map[newPosition.X, newPosition.Y] == currentLevel.boxSym)
+            if (map[newPosition.X, newPosition.Y] == currentLevel.boxSym)
             {
                 Point boxCurrentPos = newPosition;
                 Point newBoxPosition = new Point(boxCurrentPos.X + deltaX, boxCurrentPos.Y + deltaY);
@@ -42,6 +46,7 @@ namespace Sokoban
                     {
                         map[boxCurrentPos.X, boxCurrentPos.Y] = currentLevel.emptySym;
                         map[newBoxPosition.X, newBoxPosition.Y] = currentLevel.setBox;
+                        cntBoxesOnLocation++;
                     }
                 }
             }
@@ -56,6 +61,7 @@ namespace Sokoban
                     {
                         map[boxCurrentPos.X, boxCurrentPos.Y] = currentLevel.goalSym;
                         map[newBoxPosition.X, newBoxPosition.Y] = currentLevel.boxSym;
+                        cntBoxesOnLocation--;
                     }
                     else if (map[newBoxPosition.X, newBoxPosition.Y] == currentLevel.goalSym)
                     {
@@ -67,6 +73,8 @@ namespace Sokoban
 
             if(map[newPosition.X, newPosition.Y] == currentLevel.emptySym || map[newPosition.X, newPosition.Y] == currentLevel.goalSym)
             {
+                previousSteps.Add(new Tuple<char[,], Point>(previousStep, keeperPosition));
+
                 map[keeperPosition.X, keeperPosition.Y] = currentLevel.keeperBG;
                 keeperPosition.X += deltaX;
                 keeperPosition.Y += deltaY;
@@ -96,6 +104,20 @@ namespace Sokoban
             }
 
             return false;
+        }
+
+        public void makeMoveBackward()
+        {
+            int listSize = previousSteps.Count;
+
+            if (listSize > 0 && movesCount > 0)
+            {
+                map = previousSteps[listSize - 1].Item1;
+                currentLevel.setMap(map);
+                keeperPosition = previousSteps[listSize - 1].Item2;
+                previousSteps.RemoveAt(listSize - 1);
+                movesCount--;
+            }
         }
     }
 }

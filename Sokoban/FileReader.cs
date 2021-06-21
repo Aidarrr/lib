@@ -12,6 +12,7 @@ namespace Sokoban
         private Level currentLevel;
         private int filesCount = 0;
         private string pathToLevelDirectory = @"Levels\";
+        public int lvlNumber = 1;
 
         public Level getLevelObject()
         {
@@ -20,6 +21,7 @@ namespace Sokoban
 
         public void readMap(int lvlNumber = 1)
         {
+            this.lvlNumber = lvlNumber;
             string fileName = lvlNumber + ".txt";
             string[] lines = System.IO.File.ReadAllLines(pathToLevelDirectory + fileName);
             currentLevel = new Level(lines);

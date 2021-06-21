@@ -41,7 +41,7 @@ namespace Sokoban
                     cells[i, j].BackColor = SystemColors.Control;
                     cells[i, j].FlatStyle = FlatStyle.Flat;
                     cells[i, j].FlatAppearance.BorderColor = Color.Black;
-                    cells[i, j].Location = new Point(j * buttonSize + sx, i * buttonSize + sy);
+                    cells[i, j].Location = new Point(j * buttonSize + sx + j * offset, i * buttonSize + sy + i * offset);
                     cells[i, j].Text = (i * buttonInRow + j + 1).ToString();
                     
                 }

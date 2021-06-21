@@ -19,6 +19,7 @@ namespace Sokoban
         Game game;
         ImageContainer imageContainer;
         Menu menu;
+        GameInfo gameInfo;
 
         Color bgColor = Color.White;
         int offset = 30, sx = 100, sy = 100;
@@ -35,6 +36,12 @@ namespace Sokoban
             game = new Game(level);
             imageContainer = new ImageContainer();
             menu = new Menu();
+            gameInfo = new GameInfo();
+
+            lblLevelNum.Text = gameInfo.getLabelForLevel(fileReader);
+            lblMovesCount.Text = gameInfo.getLabelForMovesCount(game);
+            gameInfo.updateStopWatch();
+            timer.Enabled = true;
 
             bitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             graphics = Graphics.FromImage(bitmap);
@@ -44,6 +51,12 @@ namespace Sokoban
         {
             level = fileReader.getLevelObject();
             game = new Game(level);
+
+            lblLevelNum.Text = gameInfo.getLabelForLevel(fileReader);
+            lblMovesCount.Text = gameInfo.getLabelForMovesCount(game);
+            gameInfo.updateStopWatch();
+            timer.Enabled = true;
+
             drawMap();
         }
 
@@ -84,6 +97,24 @@ namespace Sokoban
             levelForm.Show();
         }
 
+        private void ходНазадToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            game.makeMoveBackward();
+            lblMovesCount.Text = gameInfo.getLabelForMovesCount(game);
+            drawMap();
+        }
+
+        private void timer_Tick(object sender, EventArgs e)
+        {
+            lblTime.Text = gameInfo.getLabelForTime();
+        }
+
+        private void начатьСначалаToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            fileReader.readMap(fileReader.lvlNumber);
+            setAnotherLevel();
+        }
+
         private void pictureBox1_Click(object sender, EventArgs e)
         {
 
@@ -108,7 +139,16 @@ namespace Sokoban
                 game.move(0, 1);
             }
 
+
+            lblMovesCount.Text = gameInfo.getLabelForMovesCount(game);
             drawMap();
+
+            if (game.isWon())
+            {
+                timer.Enabled = false;
+                FormForCompletedLevel completedForm = new FormForCompletedLevel(lblLevelNum.Text, lblMovesCount.Text, lblTime.Text, this, fileReader);
+                completedForm.Show();
+            }
         }
     }
 }

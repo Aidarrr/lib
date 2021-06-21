@@ -25,6 +25,11 @@ namespace Sokoban
             return map;
         }
 
+        public void setMap(char[,] map)
+        {
+            this.map = map;
+        }
+
         public Level(string[] lines)
         {
             map = new char[lines[0].Length, lines.Length];
