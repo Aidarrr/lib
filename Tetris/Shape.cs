@@ -9,10 +9,11 @@ namespace Tetris
 {
     class Shape
     {
-        private bool[,] figureData;
-        private Color color;
+        public bool[,] figureData;
+        public Color color;
         private int currentFigureState;
         private int figureNumber;
+        public int x, y;
 
         public Shape(Random rand, List<List<bool[,]>> figures, List<Color> possibleColors)
         {
@@ -28,6 +29,12 @@ namespace Tetris
         public void Rotate(List<bool[,]> figureStates)
         {
             currentFigureState = currentFigureState == figureStates.Count - 1 ? 0 : currentFigureState + 1;
+            figureData = figureStates[currentFigureState];
+        }
+
+        public void RotateBack(List<bool[,]> figureStates)
+        {
+            currentFigureState = currentFigureState == 0 ? figureStates.Count - 1 : currentFigureState - 1;
             figureData = figureStates[currentFigureState];
         }
     }
