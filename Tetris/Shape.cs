@@ -12,7 +12,7 @@ namespace Tetris
         public bool[,] figureData;
         public Color color;
         private int currentFigureState;
-        private int figureNumber;
+        public int figureNumber;
         public int x, y;
 
         public Shape(Random rand, List<List<bool[,]>> figures, List<Color> possibleColors)
@@ -24,6 +24,18 @@ namespace Tetris
 
             randIndex = rand.Next(possibleColors.Count);
             color = possibleColors[randIndex];
+
+            x = 4; y = 0;
+        }
+
+        public Shape(Shape shape)
+        {
+            figureData = shape.figureData;
+            color = shape.color;
+            currentFigureState = shape.currentFigureState;
+            figureNumber = shape.figureNumber;
+            x = shape.x;
+            y = shape.y;
         }
 
         public void Rotate(List<bool[,]> figureStates)

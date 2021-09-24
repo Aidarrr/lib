@@ -1,9 +1,0 @@
-D:\Programming\lib\DT_CW\bin\Debug\DT_CW.exe.config
-D:\Programming\lib\DT_CW\bin\Debug\DT_CW.exe
-D:\Programming\lib\DT_CW\bin\Debug\DT_CW.pdb
-D:\Programming\lib\DT_CW\obj\Debug\DT_CW.csprojAssemblyReference.cache
-D:\Programming\lib\DT_CW\obj\Debug\DT_CW.Properties.Resources.resources
-D:\Programming\lib\DT_CW\obj\Debug\DT_CW.csproj.GenerateResource.cache
-D:\Programming\lib\DT_CW\obj\Debug\DT_CW.csproj.CoreCompileInputs.cache
-D:\Programming\lib\DT_CW\obj\Debug\DT_CW.exe
-D:\Programming\lib\DT_CW\obj\Debug\DT_CW.pdb
