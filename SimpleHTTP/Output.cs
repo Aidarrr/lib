@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 
-namespace Serialization
+namespace SimpleHTTP
 {
-    public class Output
+    class Output
     {
         public decimal SumResult { get; set; }
         public int MulResult { get; set; }
@@ -22,7 +22,7 @@ namespace Serialization
         public void SortInputs(int[] Muls, decimal[] Sums)
         {
             SortedInputs = new decimal[Muls.Length + Sums.Length];
-            decimal[] MulsDecimalArr = Array.ConvertAll(Muls, x => (decimal) x);
+            decimal[] MulsDecimalArr = Array.ConvertAll(Muls, x => (decimal)x);
 
             Array.Copy(Sums, SortedInputs, Sums.Length);
             Array.Copy(MulsDecimalArr, 0, SortedInputs, Sums.Length, Muls.Length);

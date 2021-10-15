@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleHTTPClient", "SimpleHTTPClient.csproj", "{C14CA93A-FDB8-46AB-82D5-78E6FF4449A5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C14CA93A-FDB8-46AB-82D5-78E6FF4449A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C14CA93A-FDB8-46AB-82D5-78E6FF4449A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C14CA93A-FDB8-46AB-82D5-78E6FF4449A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C14CA93A-FDB8-46AB-82D5-78E6FF4449A5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C8235ED4-966B-42EE-AE23-0E35AF3853D0}
+	EndGlobalSection
+EndGlobal
