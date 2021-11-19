@@ -1,0 +1,6 @@
+﻿  Elevator.cpp
+  SSTF.cpp
+  Generating Code...
+D:\Programming\lib\SP task 4-2\Elevator.cpp(41): warning C4172: returning address of local variable or temporary: posAndInitial
+D:\Programming\lib\SP task 4-2\Elevator.cpp(22): warning C4172: returning address of local variable or temporary: posAndInitial
+  SP task 4-2.vcxproj -> D:\Programming\lib\SP task 4-2\Debug\SP task 4-2.exe
