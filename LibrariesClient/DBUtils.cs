@@ -17,6 +17,7 @@ namespace LibrariesClient
         public MySqlCommandBuilder commandBuilder;
         AddingService addingService;
         DeletingService deletingService;
+        public string queryForShowingCurrentTable;
 
         public DBUtils()
         {
@@ -61,10 +62,11 @@ namespace LibrariesClient
                         "JOIN book as b ON b.id_book = s.id_book JOIN reader as r ON r.id = s.id_reader";
                     break;
             }
+            queryForShowingCurrentTable = stmt;
             getDataFromDB(destinationTable, stmt);
         }
 
-        private void getDataFromDB(DataGridView destinationTable, string stmt)
+        public void getDataFromDB(DataGridView destinationTable, string stmt)
         {
             dataTable = new DataTable();
             adapter = new MySqlDataAdapter(stmt, MySqlConnection);

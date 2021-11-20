@@ -15,6 +15,9 @@ namespace LibrariesClient
         DBUtils dbClient = new DBUtils();
         Dictionary<ToolStripMenuItem, string> dictionary = new Dictionary<ToolStripMenuItem, string>();
         string currentTableName;
+        Filter filter;
+        RadioButtonsOperators operators;
+        SortingService sorting;
 
         public Form1()
         {
@@ -28,23 +31,15 @@ namespace LibrariesClient
             dictionary[topicsMenuStrip] = "topic";
             dictionary[addressesMenuStrip] = "address";
             dictionary[publishersMenuStrip] = "publisher";
+
+            operators = new RadioButtonsOperators(less, lessOrEqual, greater, greaterOrEqual, equal);
+            filter = new Filter(operators, dataTable, dbClient);
+            sorting = new SortingService(dbClient, dataTable);
         }
 
         private void издателиToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
-        }
-
-        private void menuTables_Click(object sender, EventArgs e)
-        {
-            currentTableName = dictionary[(ToolStripMenuItem)sender];
-            dbClient.showTableFromDB(dataTable, currentTableName);
-        }
-
-        private void addRowBtn_Click(object sender, EventArgs e)
-        {
-            dbClient.addRowToTable(currentTableName);
-            dbClient.showTableFromDB(dataTable, currentTableName);
         }
 
         private void menu_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -58,11 +53,48 @@ namespace LibrariesClient
             dbClient.showTableFromDB(dataTable, currentTableName);
         }
 
+        //Show table
+        private void menuTables_Click(object sender, EventArgs e)
+        {
+            currentTableName = dictionary[(ToolStripMenuItem)sender];
+            dbClient.showTableFromDB(dataTable, currentTableName);
+        }
+
+        private void addRowBtn_Click(object sender, EventArgs e)
+        {
+            dbClient.addRowToTable(currentTableName);
+            dbClient.showTableFromDB(dataTable, currentTableName);
+        }
+
         private void deleteRowBtn_Click(object sender, EventArgs e)
         {
             var idOfSelectedRow = (int)dataTable.SelectedRows[0].Cells[0].Value;
             dbClient.deleteRow(idOfSelectedRow, currentTableName);
             dbClient.showTableFromDB(dataTable, currentTableName);
+        }
+
+        private void filterBtn_Click(object sender, EventArgs e)
+        {
+            filter.showTableWithFilter(colNameInput.Text, conValueInput.Text);
+        }
+
+        private void cancelFilterBtn_Click(object sender, EventArgs e)
+        {
+            filter.cancelFilter();
+        }
+
+        private void sortBtn_Click(object sender, EventArgs e)
+        {
+            bool isDescending = false;
+            if (secondSortType.Checked)
+                isDescending = true;
+
+            sorting.showSortedTable(colNameForSort.Text, isDescending);
+        }
+
+        private void cancelSortBtn_Click(object sender, EventArgs e)
+        {
+            sorting.cancelSorting();
         }
     }
 }
