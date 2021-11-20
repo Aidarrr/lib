@@ -14,10 +14,12 @@ namespace LibrariesClient
     {
         DBUtils dbClient = new DBUtils();
         Dictionary<ToolStripMenuItem, string> dictionary = new Dictionary<ToolStripMenuItem, string>();
+        Dictionary<ToolStripMenuItem, string> views = new Dictionary<ToolStripMenuItem, string>();
         string currentTableName;
         Filter filter;
         RadioButtonsOperators operators;
         SortingService sorting;
+        ShowingView showingView;
 
         public Form1()
         {
@@ -32,9 +34,14 @@ namespace LibrariesClient
             dictionary[addressesMenuStrip] = "address";
             dictionary[publishersMenuStrip] = "publisher";
 
+            views[viewBooksByTopic] = "get_books_by_topic";
+            views[viewPublisherLibraries] = "libraries_publisher_books_qt";
+            views[viewReadersSubs] = "readers_subscriptions";
+
             operators = new RadioButtonsOperators(less, lessOrEqual, greater, greaterOrEqual, equal);
             filter = new Filter(operators, dataTable, dbClient);
             sorting = new SortingService(dbClient, dataTable);
+            showingView = new ShowingView(dbClient, dataTable);
         }
 
         private void издателиToolStripMenuItem_Click(object sender, EventArgs e)
@@ -58,6 +65,12 @@ namespace LibrariesClient
         {
             currentTableName = dictionary[(ToolStripMenuItem)sender];
             dbClient.showTableFromDB(dataTable, currentTableName);
+        }
+
+        private void viewsMenuItem_Click(object sender, EventArgs e)
+        {
+            currentTableName = views[(ToolStripMenuItem)sender];
+            showingView.showView(currentTableName);
         }
 
         private void addRowBtn_Click(object sender, EventArgs e)
@@ -95,6 +108,11 @@ namespace LibrariesClient
         private void cancelSortBtn_Click(object sender, EventArgs e)
         {
             sorting.cancelSorting();
+        }
+
+        private void Form1_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            dbClient.closeConnection();
         }
     }
 }

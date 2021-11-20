@@ -60,6 +60,10 @@ namespace LibrariesClient
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.secondSortType = new System.Windows.Forms.RadioButton();
             this.firstSortType = new System.Windows.Forms.RadioButton();
+            this.viewsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewReadersSubs = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewPublisherLibraries = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewBooksByTopic = new System.Windows.Forms.ToolStripMenuItem();
             this.menu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataTable)).BeginInit();
             this.operatorsForComparing.SuspendLayout();
@@ -70,7 +74,8 @@ namespace LibrariesClient
             // 
             this.menu.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuTables});
+            this.menuTables,
+            this.viewsMenuItem});
             this.menu.Location = new System.Drawing.Point(0, 0);
             this.menu.Name = "menu";
             this.menu.Size = new System.Drawing.Size(1401, 28);
@@ -96,49 +101,49 @@ namespace LibrariesClient
             // booksMenuStrip
             // 
             this.booksMenuStrip.Name = "booksMenuStrip";
-            this.booksMenuStrip.Size = new System.Drawing.Size(212, 26);
+            this.booksMenuStrip.Size = new System.Drawing.Size(224, 26);
             this.booksMenuStrip.Text = "Книги";
             this.booksMenuStrip.Click += new System.EventHandler(this.menuTables_Click);
             // 
             // libsMenuStrip
             // 
             this.libsMenuStrip.Name = "libsMenuStrip";
-            this.libsMenuStrip.Size = new System.Drawing.Size(212, 26);
+            this.libsMenuStrip.Size = new System.Drawing.Size(224, 26);
             this.libsMenuStrip.Text = "Библиотеки";
             this.libsMenuStrip.Click += new System.EventHandler(this.menuTables_Click);
             // 
             // readersMenuStrip
             // 
             this.readersMenuStrip.Name = "readersMenuStrip";
-            this.readersMenuStrip.Size = new System.Drawing.Size(212, 26);
+            this.readersMenuStrip.Size = new System.Drawing.Size(224, 26);
             this.readersMenuStrip.Text = "Читатели";
             this.readersMenuStrip.Click += new System.EventHandler(this.menuTables_Click);
             // 
             // subsMenuStrip
             // 
             this.subsMenuStrip.Name = "subsMenuStrip";
-            this.subsMenuStrip.Size = new System.Drawing.Size(212, 26);
+            this.subsMenuStrip.Size = new System.Drawing.Size(224, 26);
             this.subsMenuStrip.Text = "Абонементы";
             this.subsMenuStrip.Click += new System.EventHandler(this.menuTables_Click);
             // 
             // topicsMenuStrip
             // 
             this.topicsMenuStrip.Name = "topicsMenuStrip";
-            this.topicsMenuStrip.Size = new System.Drawing.Size(212, 26);
+            this.topicsMenuStrip.Size = new System.Drawing.Size(224, 26);
             this.topicsMenuStrip.Text = "Жанры книг";
             this.topicsMenuStrip.Click += new System.EventHandler(this.menuTables_Click);
             // 
             // addressesMenuStrip
             // 
             this.addressesMenuStrip.Name = "addressesMenuStrip";
-            this.addressesMenuStrip.Size = new System.Drawing.Size(212, 26);
+            this.addressesMenuStrip.Size = new System.Drawing.Size(224, 26);
             this.addressesMenuStrip.Text = "Таблица адресов";
             this.addressesMenuStrip.Click += new System.EventHandler(this.menuTables_Click);
             // 
             // publishersMenuStrip
             // 
             this.publishersMenuStrip.Name = "publishersMenuStrip";
-            this.publishersMenuStrip.Size = new System.Drawing.Size(212, 26);
+            this.publishersMenuStrip.Size = new System.Drawing.Size(224, 26);
             this.publishersMenuStrip.Text = "Издательства";
             this.publishersMenuStrip.Click += new System.EventHandler(this.menuTables_Click);
             // 
@@ -366,6 +371,38 @@ namespace LibrariesClient
             this.firstSortType.Text = "По возрастанию";
             this.firstSortType.UseVisualStyleBackColor = true;
             // 
+            // viewsMenuItem
+            // 
+            this.viewsMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.viewReadersSubs,
+            this.viewPublisherLibraries,
+            this.viewBooksByTopic});
+            this.viewsMenuItem.Name = "viewsMenuItem";
+            this.viewsMenuItem.Size = new System.Drawing.Size(73, 24);
+            this.viewsMenuItem.Text = "Отчеты";
+            this.viewsMenuItem.Click += new System.EventHandler(this.издателиToolStripMenuItem_Click);
+            // 
+            // viewReadersSubs
+            // 
+            this.viewReadersSubs.Name = "viewReadersSubs";
+            this.viewReadersSubs.Size = new System.Drawing.Size(353, 26);
+            this.viewReadersSubs.Text = "Отчет об абонементах читателей";
+            this.viewReadersSubs.Click += new System.EventHandler(this.viewsMenuItem_Click);
+            // 
+            // viewPublisherLibraries
+            // 
+            this.viewPublisherLibraries.Name = "viewPublisherLibraries";
+            this.viewPublisherLibraries.Size = new System.Drawing.Size(353, 26);
+            this.viewPublisherLibraries.Text = "Отчет об издательстве в библиотеках";
+            this.viewPublisherLibraries.Click += new System.EventHandler(this.viewsMenuItem_Click);
+            // 
+            // viewBooksByTopic
+            // 
+            this.viewBooksByTopic.Name = "viewBooksByTopic";
+            this.viewBooksByTopic.Size = new System.Drawing.Size(353, 26);
+            this.viewBooksByTopic.Text = "Отчет о книгах по жанрам";
+            this.viewBooksByTopic.Click += new System.EventHandler(this.viewsMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -437,6 +474,10 @@ namespace LibrariesClient
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.RadioButton secondSortType;
         private System.Windows.Forms.RadioButton firstSortType;
+        private System.Windows.Forms.ToolStripMenuItem viewsMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem viewReadersSubs;
+        private System.Windows.Forms.ToolStripMenuItem viewPublisherLibraries;
+        private System.Windows.Forms.ToolStripMenuItem viewBooksByTopic;
     }
 }
 

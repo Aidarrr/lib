@@ -104,7 +104,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RadioButtonsOperators.cs" />
     <Compile Include="RepetitionService.cs" />
+    <Compile Include="ShowingView.cs" />
     <Compile Include="SortingService.cs" />
+    <Compile Include="ViewsSQLScripts.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

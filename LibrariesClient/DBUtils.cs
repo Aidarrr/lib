@@ -27,7 +27,7 @@ namespace LibrariesClient
 
         public void openConnection()
         {
-            const string cs = @"server=localhost;userid=root;password=flomaster;database=libraries;CharSet=utf8;";
+            const string cs = @"server=localhost;userid=root;password=flomaster;database=libraries;CharSet=utf8;Allow User Variables=True;";
             MySqlConnection = new MySqlConnection(cs);
             MySqlConnection.Open();
         }
