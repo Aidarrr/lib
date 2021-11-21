@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace LibrariesClient
 {
-    class DBUtils
+    public class DBUtils
     {
         public MySqlConnection MySqlConnection;
         public MySqlDataAdapter adapter;

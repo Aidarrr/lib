@@ -31,3 +31,4 @@ D:\Programming\lib\LibrariesClient\obj\Debug\LibrariesClient.csproj.CoreCompileI
 D:\Programming\lib\LibrariesClient\obj\Debug\LibrariesClient.csproj.CopyComplete
 D:\Programming\lib\LibrariesClient\obj\Debug\LibrariesClient.exe
 D:\Programming\lib\LibrariesClient\obj\Debug\LibrariesClient.pdb
+D:\Programming\lib\LibrariesClient\obj\Debug\LibrariesClient.InputForm.resources

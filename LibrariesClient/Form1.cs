@@ -13,13 +13,20 @@ namespace LibrariesClient
     public partial class Form1 : Form
     {
         DBUtils dbClient = new DBUtils();
+        
         Dictionary<ToolStripMenuItem, string> dictionary = new Dictionary<ToolStripMenuItem, string>();
         Dictionary<ToolStripMenuItem, string> views = new Dictionary<ToolStripMenuItem, string>();
+        Dictionary<string, Table> tableClasses = new Dictionary<string, Table>();
+
         string currentTableName;
         Filter filter;
         RadioButtonsOperators operators;
         SortingService sorting;
         ShowingView showingView;
+        Adding addingService;
+
+        BookTable bookTable;
+        LibraryTable libraryTable;
 
         public Form1()
         {
@@ -42,6 +49,13 @@ namespace LibrariesClient
             filter = new Filter(operators, dataTable, dbClient);
             sorting = new SortingService(dbClient, dataTable);
             showingView = new ShowingView(dbClient, dataTable);
+            addingService = new Adding(dbClient);
+
+            bookTable = new BookTable(dbClient);
+            libraryTable = new LibraryTable(dbClient);
+
+            tableClasses["book"] = bookTable;
+            tableClasses["library"] = libraryTable;
         }
 
         private void издателиToolStripMenuItem_Click(object sender, EventArgs e)
@@ -75,7 +89,7 @@ namespace LibrariesClient
 
         private void addRowBtn_Click(object sender, EventArgs e)
         {
-            dbClient.addRowToTable(currentTableName);
+            addingService.addRow(tableClasses[currentTableName], currentTableName);
             dbClient.showTableFromDB(dataTable, currentTableName);
         }
 
